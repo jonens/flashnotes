@@ -223,12 +223,14 @@ div.score
 div.score_footer
 {
 	position: relative;
-	width: 130px;	
-	height: 275px;
+	/*width: 130px;	
+	height: 275px;*/
 	top: -295px;
-	left: 95px;
-	font-size: 0.9em;
-	text-align: right;
+	left: 0px;
+	margin-left: auto;
+	margin-right: auto;
+	font-size: 1.1em;
+	text-align: center;
 	color: orange;
 	border: 0px solid white;
 }
