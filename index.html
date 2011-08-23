@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="css/flashnotes.css" />
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+		<script type="text/javascript" src="js/modernizr.custom.18580.js"></script>
+		<script>
+			if (!Modernizr.canvas) {				
+				$('#raphael').remove();
+			}			
+		</script>
+		<script type="text/javascript" src="js/raphael.js" id="raphael"></script>
+		<script type="text/javascript" src="js/flashnotes_min.js"></script>		
+		<meta name="viewport" content="user-scalable=no, width=device-width" />
+	</head>
+	<body>
+		<noscript>Your browser does not support JavaScript.  FlashNotes requires 
+			JavaScript and a modern browser such as 
+			<a href="http://www.mozilla.com/en-US/firefox/fx/" target="_blank">FireFox</a>, 
+			<a href="http://www.google.com/chrome/" target="_blank">Chrome</a>, 
+			<a href="http://www.apple.com/safari/" target="_blank">Safari</a>, 
+			<a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home" target="_blank">IE9</a>, 
+			or <a href="http://www.opera.com/" target="_blank">Opera</a>.
+		</noscript>
+		<script>
+			var statusModel;// = new StatusModel();
+			var statusView;// = new StatusView();
+			var notationController;// = new ScoreController(2);			
+			var gameController;// = new GameController();
+			var ajaxUtilities = new AjaxUtilities();
+		</script>		
+		<div id="nocanvas_frame" title="No Canvas" class="frame">
+				<h2>No &lt;canvas&gt; Support</h2>
+				<p class="no_canvas">FlashNotes requires JavaScript and a modern browser such as 
+			<a href="http://www.mozilla.com/en-US/firefox/fx/" target="_blank">FireFox</a>, 
+			<a href="http://www.google.com/chrome/" target="_blank">Chrome</a>, 
+			<a href="http://www.apple.com/safari/" target="_blank">Safari</a>, 
+			<a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home" target="_blank">IE9</a>, 
+			or <a href="http://www.opera.com/" target="_blank">Opera</a>.</p>
+			<p class="go_home"><a href="http://www.pedaplus.com/index.php/2011-05-09-16-34-24">back to games page</a></p>
+		</div>
+		<div id="instructions_frame" title="FlashNotes Instructions" class="frame">
+			<h3>Instructions</h3>
+			<ul class="instruction_list">
+				<li>Practice Mode:
+					<ul class="instruction_list">
+						<li>Start/Stop buttons control play.</li>
+						<li>Change clef by pressing clef buttons on upper right.</li>
+						<li>No time limit.</li>
+					</ul>
+				</li>				
+				<li>Game Mode:
+					<ul class="instruction_list">
+						<li>Work quickly! Each session is timed.</li>
+						<li>To reach next level: score 80%, at least 10 attempts</li>
+						<li>Bonus points awarded for reaching next level.
+						<li>Game over after five incorrect answers (five lives).</li>
+					</ul>
+				</li>
+				<li>All Modes: Use mouse, computer keys, or touchpad to select answer.</li>
+			</ul>
+			<div class="instructions_btn">
+				<button type="button" class="dialog" id="back_button">
+						Back to Menu</button>
+			</div>
+		</div>		
+		<div id="game_frame" class="frame">			
+			<div id="status_bar">
+				<table class="status">
+					<tr>
+						<td class="status" id="status_timer">00:00</td>
+						<td class="status" id="status_points">00/00</td>
+						<td class="status" id="status_percent">000%</td>
+						<td class="status_label" id="status_level_label">Level: </td>
+						<td class="status" id="status_level"> 1</td>
+						<td class="status_label" id="status_score_label">Score: </td>
+						<td class="status" id="status_score">00000</td>
+					</tr>
+				</table>
+			</div>	
+			<div id="staff_box"></div>
+			<div id="input_buttons" class="input_box">
+				<div id="btnrow1" class="button_row">
+					<button type="button" id="a" value="A" class="inputBtn"></button>
+					<button type="button" id="b" value="B" class="inputBtn"></button>
+					<button type="button" id="c" value="C" class="inputBtn"></button>
+					<button type="button" id="d" value="D" class="inputBtn"></button>
+				</div>
+				<div id="btnrow2" class="button_row">
+					<button type="button" id="e" value="E" class="inputBtn"></button>
+					<button type="button" id="f" value="F" class="inputBtn"></button>
+					<button type="button" id="g" value="G" class="inputBtn"></button>				
+				</div>
+			</div>
+			<div id="game_status_box" class="status_box">
+				<div id="game_hiscore_label" class="status">High Score</div>
+				<div id="game_hiscore" class="status">
+					<span id="hi_score" class="status_text">0</span>
+				</div>
+				<div id="status_spacer" class="status"></div>
+				<div id="game_lives_label" class="status">Lives</div>
+				<div id="game_lives" class="status"></div>
+			</div>
+			<div id="menu_buttons" class="menu_box">			
+				<div id="menurow1"> 
+					<table id="clef_buttons">
+						<tr>
+							<td><button type="button" id="treble_button" 
+											class="clefBtn" value='0'></button></td>
+							<td><button type="button" id="bass_button" 
+											class="clefBtn" value='1'></button></td>
+						</tr>
+						<tr>
+							<td><button type="button" id="alto_button" 
+											class="clefBtn" value='2'></button></td>
+							<td><button type="button" id="tenor_button" 
+											class="clefBtn" value='3'></button></td>
+						</tr>
+					</table>
+				</div>		
+				<span id="menurow2">
+					<button type="button" id="start_button" class="menuBtn"></button>				
+					<button type="button" id="stop_button" class="menuBtn"></button>
+				</span>				
+			</div>			
+		</div>		
+		<div id="summary_frame" class="frame">		
+			<h3>Results</h3>
+			<table class="tbl_summary">
+				<tr id="score_summary_row">
+					<td class="summary_label" id="summary_score_label">Score: </td>
+					<td class="td_summary" id="score_summary"></td>
+				</tr>
+				<tr>
+					<td class="summary_label" id="summary_point_label">Points: </td>
+					<td class="td_summary" id="point_summary"></td>
+				</tr>
+				<tr>
+					<td class="summary_label" id="summary_percent_label">Percent: </td>
+					<td class="td_summary" id="percent_summary"></td>
+				</tr>
+				<tr id="time_summary_row">
+					<td class="summary_label" id="summary_time_label">Time: </td>
+					<td class="td_summary" id="time_summary"></td>
+				</tr>
+				<tr id="level_summary_row">
+					<td class="summary_label" id="summary_level_label">Level: </td>
+					<td class="td_summary" id="level_summary"></td>
+				</tr>
+				<tr id="lives_summary_row">
+					<td class="summary_label" id="summary_lives_label">Lives: </td>
+					<td class="td_summary" id="lives_summary"></td>
+				</tr>
+			</table>			
+			<div id="summary_buttons" class="sum_buttons">
+				<button type="button" class="summary" 
+							id="sum_continue_button">Continue</button>
+				<button type="button" class="summary" 
+							id="quit_button">Quit</button>
+			</div>			
+		</div>		
+		<div id="session_frame" class="frame">
+			<div id="session_start" class="session_table">
+				<h3 id="session_start_header">Level</h3>
+				<button type="button" class="session" id="session_start_button">Go!</button>
+			</div>
+			<div id="session_end" class="session_table">
+				<h3 id="session_end_header">Time Out!</h3>
+				<button type="button" class="session" id="session_end_button">Summary</button>
+			</div>
+			<div id="game_end" class="session_table">
+				<h3 id="game_end_header">Game Over!</h3>
+				<button type="button" class="session" id="game_end_button">Scores</button>
+			</div>			
+		</div>		
+		<div id="menu_frame" class="frame">
+			<h1 class="info">Welcome to FlashNotes</h1>
+			<div class="menu_dlg_btns">
+				<button type="button" class="dialog" id="practice_button">
+						Practice</button>
+				<button type="button" class="dialog" id="play_button">
+						Play Game</button>
+				<button type="button" class="dialog" id="instructions_button">
+						Instructions</button>
+			</div>
+			<p class="go_home"><a href="http://www.pedaplus.com/index.php/2011-05-09-16-34-24">back to games page</a></p>
+		</div>
+		<div id="score_display_frame" class="frame">
+			<h2>Top 10 Scores</h2>
+			<div id="top_scores" class="score">please wait</div>
+			<div id="top_dates" class="score">. . .</div>			
+			<button type="button" id="main_menu_button" class="session">Main Menu</button>
+			<div id="top_score_footer" class="score_footer"></div>
+		</div>
+	</body>
+</html>
+	
