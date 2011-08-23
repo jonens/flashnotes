@@ -1,7 +1,7 @@
 <?php
-	include('../../../../php_includes/fn_connect.php');
-	$con = mysql_connect("localhost", $user_games, $pw_games);
-	@mysql_select_db($db_games) or die( "Unable to select database");
+	include('../../../../*/*.php');
+	$con = mysql_connect("localhost", $___, $___);
+	@mysql_select_db($___) or die( "Unable to select database");
 	$score_pattern = '/\d+/';
 	$time_pattern = '/\d+/';
 	$date_string_pattern = '/(\d+-){2}\d{4}/';
@@ -18,9 +18,9 @@
 	$time = $time_match[0];
 	$date_string = $date_string_match[0];
 	$time_string = $time_string_match[0];
-	$query = "INSERT INTO flashnotes VALUES('','$score','$time','$date_string','$time_string')";
+	$query = "INSERT INTO ___ VALUES('','$score','$time','$date_string','$time_string')";
 	$result = mysql_query($query, $con);
-	$query = "SELECT score,time,date_string,time_string FROM flashnotes ORDER BY score DESC";
+	$query = "SELECT score,time,date_string,time_string FROM ___ ORDER BY score DESC";
 	$result = mysql_query($query, $con);
 	$num_rows = mysql_num_rows($result);
 	$length = ($num_rows >= 10) ? 10 : $num_rows;
