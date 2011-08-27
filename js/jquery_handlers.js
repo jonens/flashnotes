@@ -1,6 +1,8 @@
-$(document).ready(function () {	
+$(document).ready(function () {
+
 	/* Set up global variables and objects */
 	var inputs = ["a", "b", "c", "d", "e", "f", "g"];
+	
 	if (!Modernizr.canvas) {
 		$('#nocanvas_frame').show();
 	}
@@ -12,8 +14,7 @@ $(document).ready(function () {
 		notationController = new NotationController(0);			
 		gameController = new GameController();		
 		$('#stop').hide();
-		$('#menu_frame').show();	
-		/*Start-Dialog Event handlers */
+		$('#menu_frame').show();		
 		$('#practice_button').click(function () {
 			gameController.displayPractice();
 		});
@@ -27,8 +28,7 @@ $(document).ready(function () {
 		$('#back_button').click(function () {
 			$('#instructions_frame').hide();
 			$('#menu_frame').show();		
-		});		
-		/*Practice- and Game-Mode event handlers */
+		});
 		$('#start_button').click(function () {
 			var started = gameController.getStart();		
 			if (!started) {
@@ -55,7 +55,6 @@ $(document).ready(function () {
 				gameController.continueGame(code, keyId);
 			}
 		});
-
 		$('.inputBtn').click(function () {
 			var $input = $(this);		
 			var code = $input.attr('value').charCodeAt(0);
@@ -67,16 +66,13 @@ $(document).ready(function () {
 			gameController.toggleClef(t);			
 			$('#a').focus();
 		});
-		
-		
-		/* Session Alert Buttons */
 		$('#session_start_button').click(function () {
-			$('#session_frame').hide();		
+			$('#session_frame').hide();
 			statusModel.setTimeout(false);
 			$('#game_frame').show();		
 			gameController.startGame("#status_timer");
 		});
-		$('#session_end_button').click(function () {
+		$('#session_summary_button').click(function () {
 			$('#session_frame').hide();
 			gameController.displaySummary();
 		});
@@ -84,7 +80,6 @@ $(document).ready(function () {
 			$('#session_frame').hide();
 			gameController.processFinalScore();
 		});		
-		/* Summary Panel Buttons */
 		$('#sum_continue_button').click(function () {		
 			$('#summary_frame').hide();
 			$('#session_frame').hide();
@@ -104,7 +99,7 @@ $(document).ready(function () {
 		});
 		$('#quit_button').click(function () {
 			$('#summary_frame').hide();		
-			if (statusModel.getMode() === statusModel.GAME_MODE){
+			if (statusModel.getMode() === cfg.GAME_MODE){
 				gameController.processFinalScore();
 				gameController.removeLivesDisplay();
 				$('#score_display_frame').show();
@@ -113,15 +108,12 @@ $(document).ready(function () {
 				$('#menu_frame').show();
 			}
 		});
-		
-		/* Score Panel button */
 		$('#main_menu_button').click(function () {
 			$('#score_display_frame').hide();
 			$('#main_menu_button').hide();
 			gameController.init();
 			$('#menu_frame').show();
 		});
-		/* Button behaviors */
 		$('button').hover(function () {
 			$(this).css({opacity: 1.0});
 			},

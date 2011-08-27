@@ -41,8 +41,6 @@ button.clefBtn
 	height: 44px;
 	margin: 2px 2px;
 	border-width: 2px;
-	/*border-color: #fea;
-	background-color: #767888;*/
 }
 .on
 {
@@ -261,10 +259,10 @@ div.score_box
 div.score_footer
 {
 	position: absolute;
-	width: 150px;	
+	width: 300px;	
 	height: 25px;
 	top: 380px;
-	left: 175px;
+	left: 100px;
 	font-size: 1.1em;
 	text-align: center;
 	color: orange;
@@ -288,13 +286,18 @@ div.session_table
 	z-index: 4;
 	border-radius: 25px;
 }
+div.spacer
+{
+	height: 20px;
+	background-color: #447;
+}
 div.status
 {
 	position: relative;
 	margin-left: auto;
 	margin-right: auto;
 	width: 90px;
-	height: 27px;
+	height: 22px;
 	border: 0px solid #eee;
 	padding: 0px 0px;
 	font-size: 0.8em;
@@ -308,7 +311,7 @@ div.status_box
 	top: -140px;
 	float: left;
 	width: 90px;
-	height: 135px;
+	height: 185px;
 	border: 1px solid #F5F5DC;
 	padding: 2px 2px;	
 	background-color: #447;	
@@ -345,6 +348,12 @@ h1, h2, h3, h4
 	top: 15px;
 	text-align: center;
 }
+hr
+{
+	width: 100%;
+	height: 1px;
+	border: 1px solid #eee;
+}
 p
 {
 	position: relative;
@@ -367,7 +376,7 @@ p.no_canvas
 p.session
 {
 	width: 120px;
-	color: green;
+	color: #fea;
 	text-align: center;
 	font-size: 0.85em;
 }
@@ -379,10 +388,16 @@ span.ledger_num
 	font-size: 1.65em;
 	font-weight: bold;
 }
-span.status_text
+span.hiscore_text
 {
-	color: red;
+	color: #ff710e;
 	font-size: 1.65em;
+	font-weight: bold;
+}
+span.score_text
+{
+	color: #02af11;
+	font-size: 1.35em;
 	font-weight: bold;
 }
 span.your_scores
@@ -424,16 +439,9 @@ td.scores
 }
 td.status
 {
-	position: relative;
+	position: absolute;
 	text-align: center;
 	color: #1f1;	
-	border: 0px solid gray;
-}
-td.status_label
-{
-	position: relative;
-	text-align: center;
-	color: #fb6600;	
 	border: 0px solid gray;
 }
 td.td_summary
@@ -473,11 +481,16 @@ ul.instruction_list
 {
 	border: 5px solid #fea;
 }
+
 /* IDs */
 #instructions_frame
 {	
 	font-size: 0.9em;
 	text-align: left;
+}
+#clef_buttons
+{
+	position: relative;
 }
 #alto_button
 {
@@ -575,10 +588,6 @@ ul.instruction_list
 	color: #ff7000;
 	text-align: center;
 }
-#clef_buttons
-{
-	position: relative;
-}
 #percent
 {
 	width: 15%;
@@ -607,6 +616,12 @@ ul.instruction_list
 	width: 350px;
 	height: 180px;
 }
+#session_summary_button
+{
+	top: 165px;
+	left: 175px;
+	display: none;
+}
 #start_button
 {
 	border-color: #aaddaa #ddd #ddd #aaddaa;
@@ -624,6 +639,32 @@ ul.instruction_list
 	margin-right:5%;
 	border: 1px solid #F5F5DC;
 	background-color: #222;	
+}
+#status_timer
+{
+	color: #98F5FF;
+	left: 5px;
+}
+#status_points
+{
+	/*color: #FFF68F;*/
+	left: 90px;
+}
+#status_percent
+{
+	/*color: #FFF68F;*/
+	left: 150px;
+	text_align: right;
+}
+#status_level_label
+{
+	left: 220px;
+}
+#status_level
+{
+	left: 275px;
+	font-weight: bold;
+	color: #34ff34;
 }
 #stop_button
 {

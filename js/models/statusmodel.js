@@ -13,7 +13,8 @@ StatusModel = function(){
 	this.points = 0;
 	this.attempts = 0;
 	this.level = 0;	
-	this.score = 0;	
+	this.score = 0;
+	this.bonus = 0;
 	this.top_scores = new Array();
 	this.top_times = new Array();
 	this.top_date_strings = new Array();
@@ -130,9 +131,13 @@ StatusModel.prototype.calculateScore = function(){
 }
 
 StatusModel.prototype.addBonus = function (){
-	//this.score += this.BONUS * this.level;
-	this.score += cfg.BONUS * this.level;
+	this.bonus = cfg.BONUS * this.level;
+	this.score += this.bonus;
 	return this;
+}
+
+StatusModel.prototype.getBonus = function (){
+	return this.bonus;
 }
 
 StatusModel.prototype.setScore = function (num){
@@ -219,10 +224,10 @@ StatusModel.prototype.setGameClefTypes = function () {
 		sel = [false, false, !sw, sw]; //alto || tenor only
 	}
 	if (level > cfg.TIER_3 && level <= cfg.TIER_4) {
-		sel = [false, false, true, true,]; //alto || tenor only
+		sel = [false, false, true, true]; //alto || tenor only
 	}
 	if (level > cfg.TIER_4) {
-		sel = [true, true, true, true,]; //any clef
+		sel = [true, true, true, true]; //any clef
 	}
 	this.set_clef(sel);
 }

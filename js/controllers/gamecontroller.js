@@ -325,6 +325,7 @@ GameController.prototype.removeLivesDisplay = function (){
 		"end_session" button if false.  
 	@param boolean over Display "game_end" if true		*/
 GameController.prototype.displaySessionAlert = function (start, over, nextLevel){
+	var lives, lives_str;
 	$('#menu_frame').hide();
 	$('#instructions_frame').hide();
 	$('#summary_frame').hide();
@@ -335,18 +336,29 @@ GameController.prototype.displaySessionAlert = function (start, over, nextLevel)
 	if (start && !over){
 		$('#session_start_header').html("Level " + statusModel.getLevel());		
 		$('#session_end').hide();
+		$('#session_summary_button').hide();
 		$('#game_end').hide();				
 		$('#session_start').show();
 	}
 	else if (!over){
 		$('#session_start').hide();
 		$('#game_end').hide();
-		$('#lives').html("" + statusModel.getLives() + " lives left");
+		lives = statusModel.getLives();
+		lives_str = (lives > 1) ? " lives" : " life";
+		$('#lives').html("" + statusModel.getLives() + lives_str + " left");
+		if (nextLevel) {
+			$('#bonus').html("BONUS PTS<br/>" + statusModel.getBonus());
+		}
+		else {
+			$('#bonus').html("");
+		}
 		$('#session_end').show();
+		$('#session_summary_button').show();
 	}
 	else{
 		$('#session_start').hide();
 		$('#session_end').hide();
+		$('#session_summary_button').hide();
 		$('#game_end').show();
 	}
 }

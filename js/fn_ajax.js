@@ -39,16 +39,21 @@ AjaxUtilities = function () {
 		if (xhr.readyState === 4){
 			if (xhr.status === 200 || xhr.statusText === 'OK'){
 				req_status = true;
-				xml = xhr.responseXML;
-				s = xml.getElementsByTagName("score");
-				t = xml.getElementsByTagName("time");
-				ds = xml.getElementsByTagName("date_string");
-				ts = xml.getElementsByTagName("time_string");
-				for (i = 0; i < s.length; i++){
-					statusModel.top_scores[i] = s[i].childNodes[0].nodeValue;
-					statusModel.top_times[i] = t[i].childNodes[0].nodeValue;
-					statusModel.top_date_strings[i] = ds[i].childNodes[0].nodeValue;
-					statusModel.top_time_strings[i] = ts[i].childNodes[0].nodeValue;
+				try {
+					xml = xhr.responseXML;
+					s = xml.getElementsByTagName("score");
+					t = xml.getElementsByTagName("time");
+					ds = xml.getElementsByTagName("date_string");
+					ts = xml.getElementsByTagName("time_string");
+					for (i = 0; i < s.length; i++){
+						statusModel.top_scores[i] = s[i].childNodes[0].nodeValue;
+						statusModel.top_times[i] = t[i].childNodes[0].nodeValue;
+						statusModel.top_date_strings[i] = ds[i].childNodes[0].nodeValue;
+						statusModel.top_time_strings[i] = ts[i].childNodes[0].nodeValue;
+					}
+				}
+				catch (e) {
+					req_status = false;
 				}
 			}
 			else {
