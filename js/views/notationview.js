@@ -9,12 +9,7 @@ NotationView = function (box_id, w, h){
 		numPos: 15
 	};	
 	this.box = new Box(box_id, w, h);
-	this.paper = this.box.ctx();
-	this.TREBLE = 0;
-	this.BASS = 1;
-	this.ALTO = 2;
-	this.TENOR = 3;
-	this.clefArray = [this.TREBLE, this.BASS, this.ALTO, this.TENOR];
+	this.paper = this.box.ctx();	
 	this.RECT_X = 42;
 	this.RECT_Y = 0;
 	this.RECT_W = w - 42;
@@ -39,34 +34,9 @@ NotationView.prototype.staffPath = function (){
 	Note: v_offset is a numerical offset to the current note position
 	on the staff so that button-value / note-position matching will have proper
 	values based on clef and number of ledger lines  */
-NotationView.prototype.clef = function (type){	
-	var c;	
-	switch(type)
-	{
-		case this.TREBLE:			
-			c = new Clef(this.STAFF_X, this.STAFF_Y, this.PROPS.space, type, 
-						"images/treble.png");
-			break;
-		case this.BASS:
-			c = new Clef(this.STAFF_X, this.STAFF_Y, this.PROPS.space, type, 
-						"images/bass.png");
-			break;
-		case this.ALTO:
-			c = new Clef(this.STAFF_X, this.STAFF_Y, this.PROPS.space, type, 
-						"images/c_clef.png");
-			break;
-		case this.TENOR:
-			c = new Clef(this.STAFF_X, this.STAFF_Y, this.PROPS.space, type, 
-						"images/c_clef.png");
-			break;
-	}	
+NotationView.prototype.clef = function (type, imgurl) {	
+	var c = new Clef(this.STAFF_X, this.STAFF_Y, this.PROPS.space, type, imgurl);	
 	return c;
-}
-
-NotationView.prototype.randomClefType = function (){
-	var index = Math.round(Math.random() * 100) % 4;
-	var type = "" + this.clefArray[index];
-	return type;
 }
 
 NotationView.prototype.note = function (pos, staff){
