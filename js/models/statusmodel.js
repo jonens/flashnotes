@@ -20,27 +20,28 @@ StatusModel = function(){
 	this.top_time_strings = new Array();
 	this.go = false;
 	this.lives = 5;
-	this.PRACTICE_MODE = 0;
-	this.GAME_MODE = 1;
-	this.MAX_LEVEL = 13;
-	this.MIN_ATTEMPTS = 10;
-	this.MIN_PERCENT = 80;
-	this.TIMEOUT = 15;
-	this.BONUS = 100;
-	this.MAX_LIVES = 5;
-	this.response_text = "";
 	this.value;
 	this.keyCode;
 	this.keyId;
-	this.numOfCodes = 7;
-	this.timeInterval = this.TIMEOUT;
+	this.numOfCodes = 7;//Only letter names of notes: A - G	
+	this.timeInterval = cfg.TIMEOUT;
 	this.timeOut = false;
+	this.session_count = 0;
 	this.time;
 	this.t;
 	this.timerId;
 	this.mode;
 	this.date;
 	this.date_time;
+	this.active_clefs = [
+		true,			//treble
+		false,			//bass
+		false,			//alto
+		false			//tenor
+	];
+	this.clefArray = [cfg.TREBLE, cfg.BASS, cfg.ALTO, cfg.TENOR];
+	this.clefButtons = [$('#treble_button'), $('#bass_button'), $('#alto_button'),
+							$('#tenor_button')];
 }
 
 /* @param boolean go Toggles game play  */
@@ -129,7 +130,8 @@ StatusModel.prototype.calculateScore = function(){
 }
 
 StatusModel.prototype.addBonus = function (){
-	this.score += this.BONUS * this.level;
+	//this.score += this.BONUS * this.level;
+	this.score += cfg.BONUS * this.level;
 	return this;
 }
 
@@ -170,24 +172,104 @@ StatusModel.prototype.getDateString = function (){
 	return month + "-" + day + "-" + this.date.getFullYear();
 }
 
-StatusModel.prototype.getTimeString = function (){
-	//var date = new Date();
+StatusModel.prototype.getTimeString = function () {
 	var hour = "" + this.date.getHours();
 	var minute = (this.date.getMinutes() < 10) ? "0" + this.date.getMinutes() : this.date.getMinutes();
 	var second = (this.date.getSeconds() < 10) ? "0" + this.date.getSeconds() : this.date.getSeconds();
 	return hour + ":" + minute + ":" + second;
 }
 
-StatusModel.prototype.setLevel = function (lvl){
-	this.level = lvl;
+StatusModel.prototype.setLevel = function (lvl) {
+	this.level = lvl;	
+	if (this.level > cfg.BONUS_LEVEL) {
+		cfg.BONUS += cfg.BONUS_INC;
+	}
 	return this;
 }
 
-StatusModel.prototype.getLevel = function (){
+StatusModel.prototype.getLevel = function () {
 	return this.level;
 }
 
-StatusModel.prototype.subLives = function (){
+StatusModel.prototype.advanceLevel = function (){	
+	this.setLevel((this.level < cfg.MAX_LEVEL) ? this.level += 1 : cfg.MAX_LEVEL);
+	return this;
+}
+
+/* This method operates in GAME mode to indicate whether level advances 
+	@return true if level advances, false otherwise */
+StatusModel.prototype.isLevelAdvance = function (){	
+	var advance = ((this.getPercent() >= cfg.MIN_PERCENT) && (this.getTimeout()) && 
+				(this.getAttempts() >= cfg.MIN_ATTEMPTS)) ? true : false;
+	return advance;
+}
+
+StatusModel.prototype.setGameClefTypes = function () {
+	var sel, sw,
+		level = this.getLevel();
+	if (level <= cfg.TIER_1) {
+		sw = (level % 2 === 0);
+		sel = [!sw, sw, false, false]; //treble || bass only
+	}
+	if (level > cfg.TIER_1 && level <= cfg.TIER_2) {
+		sel = [true, true, false, false]; //treble || bass only
+	}
+	if (level > cfg.TIER_2 && level <= cfg.TIER_3) {
+		sw = (level % 2 === 0);
+		sel = [false, false, !sw, sw]; //alto || tenor only
+	}
+	if (level > cfg.TIER_3 && level <= cfg.TIER_4) {
+		sel = [false, false, true, true,]; //alto || tenor only
+	}
+	if (level > cfg.TIER_4) {
+		sel = [true, true, true, true,]; //any clef
+	}
+	this.set_clef(sel);
+}
+
+StatusModel.prototype.set_clef = function (selections) {
+	var i;
+	for (i = 0; i < 4; i++) {
+		this.active_clefs[i] = selections[i];
+	}
+}
+
+StatusModel.prototype.getClefType = function () {
+	var i, j,
+		clef_index_array = [],
+		count = 0;
+	for (i = 0; i < 4; i++) {
+		if (this.active_clefs[i] === true) {			
+			clef_index_array[count] = i;
+			count += 1;
+		}		
+	}
+	if (clef_index_array.length === 1) {
+		i = clef_index_array[0];		
+	}
+	else {
+		j = Math.round(Math.random() * 100) % (clef_index_array.length);		
+		i = clef_index_array[j];
+	}
+	return this.clefArray[i];	
+}
+
+// Toggle the clef buttons; if only one button is "on", don't toggle.
+StatusModel.prototype.toggleClefButton = function (type) {
+	var i, count = 0;
+	if (this.active_clefs[type]) {
+		for (i = 0; i < 4; i++) {
+			count += (this.active_clefs[i] === true) ? 1 : 0;
+		}
+		if (count === 1) {
+			return cfg.TOGGLE_NONE;
+		}
+	}
+	this.active_clefs[type] = !this.active_clefs[type];
+	return (this.active_clefs[type]) ? cfg.TOGGLE_ON : cfg.TOGGLE_OFF;
+}
+
+StatusModel.prototype.decLives = function (){
 	this.lives -= 1;
 	if (this.lives < 0){
 		this.lives = 0;
@@ -202,18 +284,6 @@ StatusModel.prototype.setLives = function (num){
 
 StatusModel.prototype.getLives = function (){
 	return this.lives;
-}
-
-StatusModel.prototype.advanceLevel = function (){	
-	this.setLevel((this.level < this.MAX_LEVEL) ? this.level += 1 : this.MAX_LEVEL);
-	return this;
-}
-
-/* This method operates in GAME mode to indicate whether level advances 
-	@return True if level advances, false otherwise */
-StatusModel.prototype.getLevelStatus = function (){
-	return (this.getPercent() >= this.MIN_PERCENT && this.getTimeout() && this.getAttempts() 
-			>= this.MIN_ATTEMPTS) ? true : false;
 }
 
 /*Checks two values for a match.  Returns true if match, false otherwise. */

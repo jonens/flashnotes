@@ -1,15 +1,16 @@
-$(document).ready(function () {
-	if (!Modernizr.canvas){
-		$('#menu_frame').hide();
+$(document).ready(function () {	
+	/* Set up global variables and objects */
+	var inputs = ["a", "b", "c", "d", "e", "f", "g"];
+	if (!Modernizr.canvas) {
 		$('#nocanvas_frame').show();
 	}
 	else {
-		/* Set up global variables and objects */
-		var inputs = ["a", "b", "c", "d", "e", "f", "g"];
+		cfg = new Config();
 		statusModel = new StatusModel();
 		statusView = new StatusView();
-		notationController = new NotationController(1);			
-		gameController = new GameController();
+		notationModel = new NotationModel();
+		notationController = new NotationController(0);			
+		gameController = new GameController();		
 		$('#stop').hide();
 		$('#menu_frame').show();	
 		/*Start-Dialog Event handlers */
@@ -62,10 +63,11 @@ $(document).ready(function () {
 			gameController.continueGame(code, keyId);		
 		});
 		$('.clefBtn').click(function () {				
-			var t = $(this).attr('value');
-			notationController.drawClef(t);
+			var t = parseInt($(this).attr('value'));
+			gameController.toggleClef(t);			
 			$('#a').focus();
 		});
+		
 		
 		/* Session Alert Buttons */
 		$('#session_start_button').click(function () {
@@ -126,6 +128,6 @@ $(document).ready(function () {
 			function () {
 				$(this).css({opacity: 0.90});
 				}
-		);		
-	}	
+		);
+	}
 });

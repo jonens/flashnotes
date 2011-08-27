@@ -1,26 +1,31 @@
 /* AJAX functions */
 
 /* constructor */
-AjaxUtilities = function (){	
+AjaxUtilities = function () {	
 	var xhr, xml,
 		req_status = false,
 		that = this,
 		type = -1;
-	this.createXHR = function (){
-		xhr = new XMLHttpRequest();	
+	this.createXHR = function () {
+		if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+			xhr = new XMLHttpRequest();
+		}
+		else { // code for IE6, IE5
+			xhr = new ActiveXObject("Microsoft.XMLHTTP");
+		}		
 	}
-	this.getXHR = function (){	
+	this.getXHR = function () {	
 		return xhr;
 	}
-	this.open = function (mode, url){
+	this.open = function (mode, url) {
 		try {
 			xhr.open(mode, url, true);
 		}
-		catch (e){
+		catch (e) {
 			req_status = false;
 		}
 	}
-	this.send = function (t, msg){
+	this.send = function (t, msg) {
 		try {
 		xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 		xhr.send(msg);
