@@ -41,9 +41,20 @@ button.clefBtn
 	height: 44px;
 	margin: 2px 2px;
 	border-width: 2px;
-	border-color: #fea;
-	background-color: #767888;
+	/*border-color: #fea;
+	background-color: #767888;*/
 }
+.on
+{
+	border-color: green;
+	background-color: white;
+}
+.off
+{
+	border-color: #444;
+	background-color: #333;
+}
+
 button.close
 {
 	position: relative;
@@ -87,6 +98,16 @@ button.inputBtn
 {
 	border-color: #ffb #bbb #bbb #ffb;
 	background-color: #3de;
+}
+button.ledger
+{
+	position: relative;
+	top: 6px;
+	width: 28px;
+	height: 28px;	
+	border: 0px solid #447;
+	border-radius: 0px;
+	background-color: #447;	
 }
 button.menuBtn
 {
@@ -135,7 +156,7 @@ div.dialog_content
 div.frame
 {
 	color: #fea;
-	position: relative;
+	position: absolute;
 	width: 500px;
 	height: 500px;
 	top: 0px;
@@ -182,14 +203,14 @@ div.instructions_btn
 }
 div.menu_box
 {
-	position: relative;
-	left: 55px;
-	top: -100px;
+	position: absolute;
+	left: 360px;
+	top: 80px;
 	float: left;	
 	margin-left: 5%;
 	margin-right: 5%;
-	width: 104px;
-	height: 200px;
+	width: 106px;
+	height: 250px;
 	border: 0px solid #eee;
 	padding: 0px 0px;
 	background-color: #447;
@@ -205,6 +226,12 @@ div.menu_dlg_btns
 	padding: 3px 3px;
 	border: 0px solid #f00;	
 }
+div.menu_row
+{
+	position: absolute;
+	float: left;
+	border: 0px solid #eee;
+}
 div.regular
 {
 	color: black;
@@ -212,23 +239,32 @@ div.regular
 div.score
 {
 	color: #fea;
-	position: relative;
+	position: absolute;
 	width: 130px;	
 	height: 275px;
 	font-family: Trebuchet, Tahoma, Verdana, Arial;
 	font-size: 1.3em;
 	border: 0px solid #ff7000;
-	border-radius: 5px;
+	border-radius: 1px;
+}
+div.score_box
+{	
+	position: absolute;
+	top: 75px;
+	width: 300px;
+	height: 290px;
+	left: 100px;
+	border: 2px solid #ff7000;
+	border-radius: 1px;
+	background-color: #333;
 }
 div.score_footer
 {
-	position: relative;
-	/*width: 130px;	
-	height: 275px;*/
-	top: -295px;
-	left: 0px;
-	margin-left: auto;
-	margin-right: auto;
+	position: absolute;
+	width: 150px;	
+	height: 25px;
+	top: 380px;
+	left: 175px;
 	font-size: 1.1em;
 	text-align: center;
 	color: orange;
@@ -327,6 +363,21 @@ p.go_home
 p.no_canvas
 {
 	top: 30px;
+}
+p.session
+{
+	width: 120px;
+	color: green;
+	text-align: center;
+	font-size: 0.85em;
+}
+span.ledger_num
+{
+	position: relative;
+	top: 5px;
+	color: #fea;
+	font-size: 1.65em;
+	font-weight: bold;
 }
 span.status_text
 {
@@ -482,6 +533,16 @@ ul.instruction_list
 {
 	background-image:url('../images/gBtn_trans.png');
 }
+#ledger_left_Btn
+{
+	float: left;
+	background-image: url('../images/arrow_left_orng.png');
+}
+#ledger_right_Btn
+{
+	float: right;
+	background-image: url('../images/arrow_right_orng.png');
+}
 #level
 {
 	width: 10%;
@@ -492,13 +553,27 @@ ul.instruction_list
 }
 #main_menu_button
 {
-	top: -200px;
+	top: 345px;
 	left: 175px;
 	display: none;
 }
 #menu_button
 {
 	background-image: url('../images/menuBtn.png');
+}
+#m_row1
+{
+	top: 0px;
+	left: 0px;
+}
+#m_row2
+{
+	top: 125px;
+	left: 0px;
+	width: 106px;
+	height: 64px;
+	color: #ff7000;
+	text-align: center;
 }
 #clef_buttons
 {
@@ -561,12 +636,13 @@ ul.instruction_list
 }
 #top_scores
 {
-	top: 45px;
-	left: 95px;
+	top: 15px;
+	left: 10px;
 	text-align: right;
 }
 #top_dates
 {
-	top: -230px;
-	left: 275px;
+	top: 15px;
+	left: 160px;
+	text-align: left;
 }
