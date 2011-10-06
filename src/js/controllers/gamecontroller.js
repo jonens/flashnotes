@@ -15,24 +15,38 @@ GameController = function (){
 /* Initialize game variables to initial state */
 GameController.prototype.init = function (){	
 	statusModel.start(false);
-	statusModel.setTimeout(false);
-	statusModel.setTimeInterval(statusModel.TIMEOUT);
+	statusModel.setTimeout(false);	
+	statusModel.setTimeInterval(cfg.TIMEOUT);
 	statusModel.setLevel(1);	
 	statusModel.setPoints(0);
 	statusModel.setAttempts(0);
-	statusModel.setScore(0);
-	statusModel.setLives(statusModel.MAX_LIVES);
+	statusModel.setScore(0);	
+	statusModel.setLives(cfg.MAX_LIVES);
 	statusView.displayTime("#status_timer", 0);
-	notationController.hideNote();
-	notationController.drawClef('0');
+	notationController.hideNote();	
+	notationController.drawClef(cfg.TREBLE);
+	notationController.setLedgerLines(cfg.MIN_LEDGER);
 	$('#start_button').hide();
 	$('#stop_button').hide();
+	this.initClefs(cfg.TREBLE);
 	this.displayScore();	
 	return this;
 }
 
 GameController.prototype.setMode = function (mode){
 	statusModel.setMode(mode);
+}
+
+GameController.prototype.initClefs = function (type) {
+	var i;
+	for (i = 0; i < 4; i++) {
+		statusModel.active_clefs[i] = false;
+		statusModel.clefButtons[i].removeClass('on');
+		statusModel.clefButtons[i].addClass('off');
+	}
+	statusModel.active_clefs[type] = true;
+	statusModel.clefButtons[type].removeClass('off');
+	statusModel.clefButtons[type].addClass('on');	
 }
 
 GameController.prototype.startGame = function (timer_id){
@@ -44,11 +58,10 @@ GameController.prototype.startGame = function (timer_id){
 		statusModel.start(true);
 		document.getElementById(key_id).focus();
 		switch (mode){
-			case statusModel.GAME_MODE:			
+			case cfg.GAME_MODE:
 				this.startTimer(timer_id, statusModel.getTimeInterval(), mode);
 				break;
-			case statusModel.PRACTICE_MODE:
-				notationController.setLedgerLines(3);//req. this; practice mode has no levels
+			case cfg.PRACTICE_MODE:				
 				this.startTimer(timer_id, 0, mode);
 				break;
 		}		
@@ -72,40 +85,52 @@ GameController.prototype.startTimer = function (timer_id, timeOut, mode){
 			1000);
 	}	
 	statusView.displayTime(timer_id, timeOut);	
-	
 	return this;	
 }
 
-GameController.prototype.updateTimer = function (timer_id, time, mode){		
-	if (statusModel.getStart() && mode === statusModel.GAME_MODE){
+GameController.prototype.updateTimer = function (timer_id, time, mode) {	
+	if (statusModel.getStart() && mode === cfg.GAME_MODE) {
 		time -= 1;
 		statusModel.setTime(time);
 		statusModel.setTimeInterval(time);
 		this.startTimer(timer_id, time, mode);	
-	}
-	else if (statusModel.getStart() && mode === statusModel.PRACTICE_MODE){
+	}	
+	else if (statusModel.getStart() && mode === cfg.PRACTICE_MODE) {
 		time += 1;
 		statusModel.setTime(time);
 		this.startTimer(timer_id, time, mode);
 	}
 }
 
-GameController.prototype.continueGame = function (code, key_id){
-	var start = statusModel.getStart();
-	var lives, matched;	
-	var isGame = (statusModel.getMode() === statusModel.GAME_MODE) ? true : false;
+GameController.prototype.continueGame = function (code, key_id) {
+	var lives, matched,
+		start = statusModel.getStart(),
+		level = statusModel.getLevel(),
+		isGame = (statusModel.getMode() === cfg.GAME_MODE) ? true : false;
 	statusModel.keyCode = code - 65;	
 	statusModel.value = notationController.getNoteValue();	
 	statusModel.keyId = key_id;
 	matched = this.isNoteMatched();	
 	if (isGame && !matched){
-		statusModel.subLives();		
+		statusModel.decLives();		
 		lives = statusModel.getLives();
 		statusView.updateLivesDisplay();
 	}
 	if (start && matched){	
-		if (this.isMaxLevel){		
-			notationController.drawClef(notationController.getRandomClefType());
+		if (this.isMaxLevel) {		
+			notationController.drawClef(notationController.getRandomClefType(4, 0));
+		}
+		else {
+			if (level >=5 && level <= 8) {
+				notationController.drawClef(notationController.getRandomClefType(2, 0));
+			}
+			if (level >=13 && level <= 16) {
+				notationController.drawClef(notationController.getRandomClefType(2, 2));
+			}			
+		}
+		if (!isGame) {
+			this.setPracticeLedger();
+			notationController.drawClef(statusModel.getClefType());
 		}
 		notationController.drawNote();
 		statusModel.addPoint();
@@ -119,21 +144,21 @@ GameController.prototype.continueGame = function (code, key_id){
 }
 
 GameController.prototype.stopGame = function (){
-	var nextLevel, level, game_over;
+	var next_level, level, game_over;
 	statusModel.start(false);	
 	notationController.hideNote();	
 	document.getElementById(statusModel.keyId).blur();	
-	if (statusModel.getMode() === statusModel.GAME_MODE){		
-		nextLevel = statusModel.getLevelStatus(); //important! call this BEFORE re-setting points
+	if (statusModel.getMode() === cfg.GAME_MODE){
+		next_level = statusModel.isLevelAdvance(); //important! call this BEFORE re-setting points
 		game_over = (statusModel.getLives() > 0) ? false : true;
-		if (nextLevel){		
+		if (next_level){
 			statusModel.advanceLevel();
 			statusModel.addBonus();			
 		}
-		this.displaySessionAlert(false, game_over);
+		this.displaySessionAlert(false, game_over, next_level);
 	}
 	else{
-		notationController.setLedgerLines(1);//reset ledgerlines (in case return to game mode)
+		notationController.setLedgerLines(cfg.MIN_LEDGER);//reset ledgerlines (in case return to game mode)
 		$("#stop_button").hide();
 		$("#start_button").show();
 		this.displaySummary();
@@ -144,7 +169,7 @@ GameController.prototype.stopGame = function (){
 /* Call this function only after a timeout (not after user presses stop button) */
 GameController.prototype.resetGame = function (){
 	statusModel.setTimeout(false);
-	statusModel.setTimeInterval(statusModel.TIMEOUT);	
+	statusModel.setTimeInterval(cfg.TIMEOUT);
 	statusModel.setPoints(0);
 	statusModel.setAttempts(0);	
 	this.displayScore();
@@ -159,67 +184,80 @@ GameController.prototype.isNoteMatched = function(){
 	return match;
 }
 
+GameController.prototype.toggleClef = function (type) {
+	var	toggleState = statusModel.toggleClefButton(type);
+	switch (toggleState) {
+		case cfg.TOGGLE_ON:
+			statusModel.clefButtons[type].removeClass('off');
+			statusModel.clefButtons[type].addClass('on');
+			notationController.drawClef(type);
+			break;
+		case cfg.TOGGLE_OFF:
+			statusModel.clefButtons[type].removeClass('on');
+			statusModel.clefButtons[type].addClass('off');
+			notationController.drawClef(statusModel.getClefType());
+			break;
+		default:
+			break;
+	}
+}
+
+GameController.prototype.setPracticeLedger = function () {
+	var pct = statusModel.getPercent(),
+		att = statusModel.getAttempts(),
+		numlines = notationController.getLedgerLines();
+	if (pct >= cfg.P_HIGH_PCT && (att % cfg.PRACTICE_ATT === 0) && 
+				numlines < cfg.MAX_LEDGER) {		
+		notationController.setLedgerLines(numlines + 1);
+	}
+	if (pct < cfg.P_LOW_PCT && numlines > cfg.MIN_LEDGER) {		
+		notationController.setLedgerLines(numlines - 1);
+	}
+}
+		
 /* Use this method to update the game to the next level when in GAME mode,
 	ONLY after stopGame() && */
 GameController.prototype.updateLevel = function (){
-	var level = statusModel.getLevel();	
-	if (level === statusModel.MAX_LEVEL){	
+	var level = statusModel.getLevel(),
+		ledger_num = ((level % 2) === 0) ? (level/2 - 1) : Math.floor(level/2),
+		clef_type;
+	statusModel.setGameClefTypes();
+	clef_type = statusModel.getClefType();
+	ledger_num = ledger_num % 4;	
+	if (level === cfg.MAX_LEVEL) {
 		this.isMaxLevel = true;
-		notationController.drawClef(notationController.getRandomClefType());
+		notationController.drawClef(notationController.getRandomClefType(4, 0));
 		notationController.setLedgerLines(3);
 	}
-	else{
-		switch (level){
-			case 1:
-			case 3:
-			case 5:
-				notationController.drawClef('0');
+	else{		
+		switch (clef_type) {
+			case cfg.RANDOM_TB:
+				notationController.drawClef(notationController.getRandomClefType(2, 0));
 				break;
-			case 2:
-			case 4:
-			case 6:
-				notationController.drawClef('1');
-				break;
-			case 7:
-			case 9:
-			case 11:
-				notationController.drawClef('2');
+			case cfg.RANDOM_AT:
+				notationController.drawClef(notationController.getRandomClefType(2, 2));
 				break;
 			default:
-				notationController.drawClef('3');
+				notationController.drawClef(clef_type);
 				break;
-		}
-		switch (level){
-			case 1:
-			case 2:
-			case 7:
-			case 8:
-				notationController.setLedgerLines(1);
-				break;
-			case 3:
-			case 4:
-			case 9:
-			case 10:
-				notationController.setLedgerLines(2);
-				break;
-			default:
-				notationController.setLedgerLines(3);
-				break;		
-		}	
+		}		
+		notationController.setLedgerLines(ledger_num);
 	}
 	if (statusModel.getTimeout()){
 		this.resetGame();
 	}
 	this.displayScore();
-	this.displaySessionAlert(1);
+	this.displaySessionAlert(true, false, false);
 }
 
 GameController.prototype.displayPractice = function (){
-	this.init();		
-	this.setMode(statusModel.PRACTICE_MODE);
+	this.init();
+	this.setMode(cfg.PRACTICE_MODE);
 	$('#menu_frame').hide();
+	$('#status_level_label').html("");
+	$('#status_level').html("");
 	$('#game_frame').show();		
-	$('#menu_buttons').show();	
+	$('#menu_buttons').show();
 	$('#game_status_box').hide();
 	$('#stop_button').hide();
 	$('#start_button').show();
@@ -227,9 +265,9 @@ GameController.prototype.displayPractice = function (){
 
 GameController.prototype.displayGame = function (){
 	this.init();
-	this.setMode(statusModel.GAME_MODE);
-	statusView.initLivesDisplay("game_lives", statusModel.MAX_LIVES);	
-	this.displaySessionAlert(true, false);		
+	this.setMode(cfg.GAME_MODE);
+	statusView.initLivesDisplay("game_lives", cfg.MAX_LIVES);
+	this.displaySessionAlert(true, false, false);		
 }
 
 /* Display points, percent, and total score on Status Bar on Game Screen */
@@ -239,7 +277,9 @@ GameController.prototype.displayScore = function (){
 	statusView.displayPercent("#status_percent", statusModel.getPoints(), 
 		statusModel.getAttempts());
 	statusView.displayScore("#status_score", statusModel.getScore());
-	statusView.displayLevel("#status_level", statusModel.getLevel());
+	if (statusModel.getMode() === cfg.GAME_MODE) {
+		statusView.displayLevel("#status_level", statusModel.getLevel());
+	}
 	statusView.displayHiScore("#hi_score", statusModel.getHiScore());
 }
 
@@ -250,8 +290,8 @@ GameController.prototype.displaySummary = function (){
 	statusView.displayPoints("#point_summary", statusModel.getPoints(), 
 		statusModel.getAttempts());
 	statusView.displayPercent("#percent_summary", statusModel.getPoints(), 
-		statusModel.getAttempts());
-	if (statusModel.getMode() === statusModel.PRACTICE_MODE){	
+		statusModel.getAttempts());	
+	if (statusModel.getMode() === cfg.PRACTICE_MODE) {
 		$('#score_summary_row').hide();
 		$('#level_summary_row').hide();
 		$('#lives_summary_row').hide();
@@ -260,8 +300,8 @@ GameController.prototype.displaySummary = function (){
 		$('#time_summary_row').show();
 		time = (statusModel.getTime()) ? statusModel.getTime() : 0;
 		$('#time_summary').html("" + time + " sec");
-	}
-	if (statusModel.getMode() === statusModel.GAME_MODE){					
+	}	
+	if (statusModel.getMode() === cfg.GAME_MODE) {
 		statusView.displayScore("#score_summary", statusModel.getScore());
 		$('#time_summary_row').hide();
 		$('#score_summary_row').show();
@@ -275,7 +315,7 @@ GameController.prototype.displaySummary = function (){
 }
 
 GameController.prototype.removeLivesDisplay = function (){
-	if (statusModel.getMode() === statusModel.GAME_MODE){
+	if (statusModel.getMode() === cfg.GAME_MODE) {
 		statusView.removeLivesDisplay();
 	}
 }
@@ -284,7 +324,8 @@ GameController.prototype.removeLivesDisplay = function (){
 	@param boolean start Display "start_session" button if true, display 
 		"end_session" button if false.  
 	@param boolean over Display "game_end" if true		*/
-GameController.prototype.displaySessionAlert = function (start, over){	
+GameController.prototype.displaySessionAlert = function (start, over, nextLevel){
+	var lives, lives_str;
 	$('#menu_frame').hide();
 	$('#instructions_frame').hide();
 	$('#summary_frame').hide();
@@ -293,19 +334,31 @@ GameController.prototype.displaySessionAlert = function (start, over){
 	$('#session_frame').show();
 	$('#game_status_box').show();	
 	if (start && !over){
-		$('#session_start_header').html("Level " + statusModel.getLevel());
+		$('#session_start_header').html("Level " + statusModel.getLevel());		
 		$('#session_end').hide();
-		$('#game_end').hide();
+		$('#session_summary_button').hide();
+		$('#game_end').hide();				
 		$('#session_start').show();
 	}
 	else if (!over){
 		$('#session_start').hide();
 		$('#game_end').hide();
+		lives = statusModel.getLives();
+		lives_str = (lives > 1) ? " lives" : " life";
+		$('#lives').html("" + statusModel.getLives() + lives_str + " left");
+		if (nextLevel) {
+			$('#bonus').html("BONUS PTS<br/>" + statusModel.getBonus());
+		}
+		else {
+			$('#bonus').html("");
+		}
 		$('#session_end').show();
+		$('#session_summary_button').show();
 	}
 	else{
 		$('#session_start').hide();
 		$('#session_end').hide();
+		$('#session_summary_button').hide();
 		$('#game_end').show();
 	}
 }
@@ -342,7 +395,8 @@ GameController.prototype.processFinalScore = function (){
 }
 
 GameController.prototype.displayFinalScore = function (success){
-	var i, score, date, time,		
+	var i, score, date, time,
+		rank = "",
 		scores = "",
 		dates = "",
 		footer_string = "your score: " + statusModel.getScore(),
@@ -352,22 +406,27 @@ GameController.prototype.displayFinalScore = function (success){
 			score = parseInt(statusModel.top_scores[i]);
 			date = statusModel.top_date_strings[i];
 			time = parseInt(statusModel.top_times[i]);
-			if (score === statusModel.getScore() && time === statusModel.getDateTime()){				
-				scores += "<span class=\"your_scores\">****" + score + "</span><br />";
+			if (score === statusModel.getScore() && time === statusModel.getDateTime()){	rank += "<span class=\"your_scores\">" + (i + 1) + ".</span><br />";
+				scores += "<span class=\"your_scores\">" + score + "*" +  "</span><br />";
 				dates += "<span class=\"your_scores\">" + date + "</span><br />";
-				footer_string = "**** your score";
+				footer_string = "* your score";
 			}
 			else {
+				rank += (i + 1) + ".<br />";
 				scores += score + "<br />";
 				dates += date + "<br />";
 			}
 		}
 	}
 	else {
-		scores += "unavailable";
-		dates += "unavailable";
+		for (i = 0; i < 10; i++){
+			rank += (i + 1) + ".<br />";
+			scores += "unavailable<br />";
+			dates += "unavailable<br />";
+		}
 	}	
-	$('#score_display_frame').show();	
+	$('#score_display_frame').show();
+	$('#top_rank').html(rank);
 	$('#top_scores').html(scores);
 	$('#top_dates').html(dates);
 	$('#top_score_footer').html(footer_string);
