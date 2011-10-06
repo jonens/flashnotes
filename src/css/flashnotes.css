@@ -41,9 +41,18 @@ button.clefBtn
 	height: 44px;
 	margin: 2px 2px;
 	border-width: 2px;
-	border-color: #fea;
-	background-color: #767888;
 }
+.on
+{
+	border-color: green;
+	background-color: white;
+}
+.off
+{
+	border-color: #444;
+	background-color: #333;
+}
+
 button.close
 {
 	position: relative;
@@ -87,6 +96,16 @@ button.inputBtn
 {
 	border-color: #ffb #bbb #bbb #ffb;
 	background-color: #3de;
+}
+button.ledger
+{
+	position: relative;
+	top: 6px;
+	width: 28px;
+	height: 28px;	
+	border: 0px solid #447;
+	border-radius: 0px;
+	background-color: #447;	
 }
 button.menuBtn
 {
@@ -135,7 +154,7 @@ div.dialog_content
 div.frame
 {
 	color: #fea;
-	position: relative;
+	position: absolute;
 	width: 500px;
 	height: 500px;
 	top: 0px;
@@ -182,14 +201,14 @@ div.instructions_btn
 }
 div.menu_box
 {
-	position: relative;
-	left: 55px;
-	top: -100px;
+	position: absolute;
+	left: 360px;
+	top: 80px;
 	float: left;	
 	margin-left: 5%;
 	margin-right: 5%;
-	width: 104px;
-	height: 200px;
+	width: 106px;
+	height: 250px;
 	border: 0px solid #eee;
 	padding: 0px 0px;
 	background-color: #447;
@@ -205,6 +224,12 @@ div.menu_dlg_btns
 	padding: 3px 3px;
 	border: 0px solid #f00;	
 }
+div.menu_row
+{
+	position: absolute;
+	float: left;
+	border: 0px solid #eee;
+}
 div.regular
 {
 	color: black;
@@ -212,23 +237,32 @@ div.regular
 div.score
 {
 	color: #fea;
-	position: relative;
-	width: 130px;	
+	position: absolute;
+	width: 150px;	
 	height: 275px;
 	font-family: Trebuchet, Tahoma, Verdana, Arial;
 	font-size: 1.3em;
 	border: 0px solid #ff7000;
-	border-radius: 5px;
+	border-radius: 1px;
+}
+div.score_box
+{	
+	position: absolute;
+	top: 75px;
+	width: 360px;
+	height: 295px;
+	left: 70px;
+	border: 2px solid #ff7000;
+	border-radius: 1px;
+	background-color: #333;
 }
 div.score_footer
 {
-	position: relative;
-	/*width: 130px;	
-	height: 275px;*/
-	top: -295px;
-	left: 0px;
-	margin-left: auto;
-	margin-right: auto;
+	position: absolute;
+	width: 300px;	
+	height: 25px;
+	top: 380px;
+	left: 100px;
 	font-size: 1.1em;
 	text-align: center;
 	color: orange;
@@ -252,13 +286,18 @@ div.session_table
 	z-index: 4;
 	border-radius: 25px;
 }
+div.spacer
+{
+	height: 20px;
+	background-color: #447;
+}
 div.status
 {
 	position: relative;
 	margin-left: auto;
 	margin-right: auto;
 	width: 90px;
-	height: 27px;
+	height: 22px;
 	border: 0px solid #eee;
 	padding: 0px 0px;
 	font-size: 0.8em;
@@ -272,7 +311,7 @@ div.status_box
 	top: -140px;
 	float: left;
 	width: 90px;
-	height: 135px;
+	height: 185px;
 	border: 1px solid #F5F5DC;
 	padding: 2px 2px;	
 	background-color: #447;	
@@ -309,6 +348,12 @@ h1, h2, h3, h4
 	top: 15px;
 	text-align: center;
 }
+hr
+{
+	width: 100%;
+	height: 1px;
+	border: 1px solid #eee;
+}
 p
 {
 	position: relative;
@@ -328,10 +373,31 @@ p.no_canvas
 {
 	top: 30px;
 }
-span.status_text
+p.session
 {
-	color: red;
+	width: 120px;
+	color: #fea;
+	text-align: center;
+	font-size: 0.85em;
+}
+span.ledger_num
+{
+	position: relative;
+	top: 5px;
+	color: #fea;
 	font-size: 1.65em;
+	font-weight: bold;
+}
+span.hiscore_text
+{
+	color: #ff710e;
+	font-size: 1.65em;
+	font-weight: bold;
+}
+span.score_text
+{
+	color: #02af11;
+	font-size: 1.35em;
 	font-weight: bold;
 }
 span.your_scores
@@ -373,16 +439,9 @@ td.scores
 }
 td.status
 {
-	position: relative;
+	position: absolute;
 	text-align: center;
 	color: #1f1;	
-	border: 0px solid gray;
-}
-td.status_label
-{
-	position: relative;
-	text-align: center;
-	color: #fb6600;	
 	border: 0px solid gray;
 }
 td.td_summary
@@ -422,11 +481,16 @@ ul.instruction_list
 {
 	border: 5px solid #fea;
 }
+
 /* IDs */
 #instructions_frame
 {	
 	font-size: 0.9em;
 	text-align: left;
+}
+#clef_buttons
+{
+	position: relative;
 }
 #alto_button
 {
@@ -482,6 +546,16 @@ ul.instruction_list
 {
 	background-image:url('../images/gBtn_trans.png');
 }
+#ledger_left_Btn
+{
+	float: left;
+	background-image: url('../images/arrow_left_orng.png');
+}
+#ledger_right_Btn
+{
+	float: right;
+	background-image: url('../images/arrow_right_orng.png');
+}
 #level
 {
 	width: 10%;
@@ -492,7 +566,7 @@ ul.instruction_list
 }
 #main_menu_button
 {
-	top: -200px;
+	top: 345px;
 	left: 175px;
 	display: none;
 }
@@ -500,9 +574,19 @@ ul.instruction_list
 {
 	background-image: url('../images/menuBtn.png');
 }
-#clef_buttons
+#m_row1
 {
-	position: relative;
+	top: 0px;
+	left: 0px;
+}
+#m_row2
+{
+	top: 125px;
+	left: 0px;
+	width: 106px;
+	height: 64px;
+	color: #ff7000;
+	text-align: center;
 }
 #percent
 {
@@ -532,6 +616,12 @@ ul.instruction_list
 	width: 350px;
 	height: 180px;
 }
+#session_summary_button
+{
+	top: 165px;
+	left: 175px;
+	display: none;
+}
 #start_button
 {
 	border-color: #aaddaa #ddd #ddd #aaddaa;
@@ -550,6 +640,31 @@ ul.instruction_list
 	border: 1px solid #F5F5DC;
 	background-color: #222;	
 }
+#status_timer
+{
+	color: #98F5FF;
+	left: 5px;
+}
+#status_points
+{
+	/*color: #FFF68F;*/
+	left: 90px;
+}
+#status_percent
+{
+	/*color: #FFF68F;*/
+	left: 150px;
+}
+#status_level_label
+{
+	left: 220px;
+}
+#status_level
+{
+	left: 275px;
+	font-weight: bold;
+	color: #34ff34;
+}
 #stop_button
 {
 	border-color: red #ccc #ccc red;
@@ -559,14 +674,25 @@ ul.instruction_list
 {
 	width: 20%;
 }
-#top_scores
-{
-	top: 45px;
-	left: 95px;
-	text-align: right;
-}
 #top_dates
 {
-	top: -230px;
-	left: 275px;
+	top: 10px;
+	left: 200px;
+	text-align: left;
+}
+#top_rank
+{
+	top: 10px;
+	left: 5px;
+	width: 30px;
+	text-align: right;
+	border: 0px solid #f02;
+}
+#top_scores
+{
+	top: 10px;
+	left: 50px;
+	width: 125px;
+	text-align: left;
+	border: 0px solid #ff4;
 }
