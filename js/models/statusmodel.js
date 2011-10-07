@@ -1,7 +1,7 @@
 /* Provides basic control functions for games */
 
 /* constructor */
-StatusModel = function(){
+Flash.Notes.StatusModel = function(){
 	if (Modernizr.localstorage){
 		var score = parseInt(localStorage.getItem("hiscore"));
 		this.hi_score = (score) ? score : 0;
@@ -45,115 +45,115 @@ StatusModel = function(){
 							$('#tenor_button')];
 }
 
-/* @param boolean go Toggles game play  */
-StatusModel.prototype.start = function (go){
+/** @param boolean go Toggles game play  */
+Flash.Notes.StatusModel.prototype.start = function (go){
 	this.go = go;
 	return this;
 }
 
-StatusModel.prototype.getStart = function (){
+Flash.Notes.StatusModel.prototype.getStart = function (){
 	return this.go;
 }
 
-StatusModel.prototype.setMode = function (mode){
+Flash.Notes.StatusModel.prototype.setMode = function (mode){
 	this.mode = mode;	
 	return this;
 }
 
-StatusModel.prototype.getMode = function (){
+Flash.Notes.StatusModel.prototype.getMode = function (){
 	return this.mode;
 }
 
-StatusModel.prototype.setTimeInterval = function (num){
+Flash.Notes.StatusModel.prototype.setTimeInterval = function (num){
 	this.timeInterval = num;
 	return this;
 }
 
-StatusModel.prototype.getTimeInterval = function (){
+Flash.Notes.StatusModel.prototype.getTimeInterval = function (){
 	return this.timeInterval;
 }
 
-StatusModel.prototype.setTime = function (time){
+Flash.Notes.StatusModel.prototype.setTime = function (time){
 	this.time = time;
 	return this;
 }
 
-StatusModel.prototype.getTime = function (){
+Flash.Notes.StatusModel.prototype.getTime = function (){
 	return this.time;
 }
 
-/* Set a boolean indicating whether timeOut */
-StatusModel.prototype.setTimeout = function (timeout){
+/** Set a boolean indicating whether timeOut */
+Flash.Notes.StatusModel.prototype.setTimeout = function (timeout){
 	this.timeOut = timeout;
 	return this;
 }
 
-/* Get a boolean indicating whether timeOut */
-StatusModel.prototype.getTimeout = function (){
+/** Get a boolean indicating whether timeOut */
+Flash.Notes.StatusModel.prototype.getTimeout = function (){
 	return this.timeOut;
 }
 
-StatusModel.prototype.addPoint = function (){	
+Flash.Notes.StatusModel.prototype.addPoint = function (){	
 	this.points += 1;
 	return this;
 }
 
-StatusModel.prototype.setPoints = function (num){	
+Flash.Notes.StatusModel.prototype.setPoints = function (num){	
 	this.points = num;	
 	return this;
 }
 
-StatusModel.prototype.getPoints = function (){
+Flash.Notes.StatusModel.prototype.getPoints = function (){
 	return this.points;
 }
 
-StatusModel.prototype.addAttempt = function (){
+Flash.Notes.StatusModel.prototype.addAttempt = function (){
 	this.attempts += 1;
 	return this;
 }
 
-StatusModel.prototype.setAttempts = function (num){
+Flash.Notes.StatusModel.prototype.setAttempts = function (num){
 	this.attempts = num;
 }
 
-StatusModel.prototype.getAttempts = function (){
+Flash.Notes.StatusModel.prototype.getAttempts = function (){
 	return this.attempts;
 }
 
-StatusModel.prototype.getPercent = function (){
+Flash.Notes.StatusModel.prototype.getPercent = function (){
 	return Math.floor((this.points /this.attempts) * 100);
 }
 
-/* Helper function.  Should be "private" [don't call externally) */
-StatusModel.prototype.calculateScore = function(){
+/** Helper function.  Should be "private" [don't call externally) */
+Flash.Notes.StatusModel.prototype.calculateScore = function(){
 	this.score += (this.points * this.level);
 	return this;
 }
 
-StatusModel.prototype.addBonus = function (){
+Flash.Notes.StatusModel.prototype.addBonus = function (){
 	this.bonus = cfg.BONUS * this.level;
 	this.score += this.bonus;
 	return this;
 }
 
-StatusModel.prototype.getBonus = function (){
+Flash.Notes.StatusModel.prototype.getBonus = function (){
 	return this.bonus;
 }
 
-StatusModel.prototype.setScore = function (num){
+Flash.Notes.StatusModel.prototype.setScore = function (num){
 	this.score = num;
 	return this;
 }
 
-StatusModel.prototype.getScore = function (){
+Flash.Notes.StatusModel.prototype.getScore = function (){
 	return this.score;
 }
 
-StatusModel.prototype.getHiScore = function (){
+Flash.Notes.StatusModel.prototype.getHiScore = function (){
 	return this.hi_score;
 }
 
-StatusModel.prototype.setHiScore = function (num){
+Flash.Notes.StatusModel.prototype.setHiScore = function (num){
 	this.hi_score = num;
 	if (Modernizr.localstorage){
 		localStorage.setItem("hiscore", this.hi_score);
@@ -161,30 +161,30 @@ StatusModel.prototype.setHiScore = function (num){
 	return this;
 }
 
-StatusModel.prototype.setDate = function (){
+Flash.Notes.StatusModel.prototype.setDate = function (){
 	this.date = new Date();
 	this.date_time = this.date.getTime();
 }
 
-StatusModel.prototype.getDateTime = function (){
+Flash.Notes.StatusModel.prototype.getDateTime = function (){
 	return this.date_time;
 }
 
-StatusModel.prototype.getDateString = function (){
+Flash.Notes.StatusModel.prototype.getDateString = function (){
 	//var date = new Date();
 	var month = "" + (this.date.getMonth() + 1);
 	var day = (this.date.getDate() < 10) ? "0" + this.date.getDate() : this.date.getDate();	
 	return month + "-" + day + "-" + this.date.getFullYear();
 }
 
-StatusModel.prototype.getTimeString = function () {
+Flash.Notes.StatusModel.prototype.getTimeString = function () {
 	var hour = "" + this.date.getHours();
 	var minute = (this.date.getMinutes() < 10) ? "0" + this.date.getMinutes() : this.date.getMinutes();
 	var second = (this.date.getSeconds() < 10) ? "0" + this.date.getSeconds() : this.date.getSeconds();
 	return hour + ":" + minute + ":" + second;
 }
 
-StatusModel.prototype.setLevel = function (lvl) {
+Flash.Notes.StatusModel.prototype.setLevel = function (lvl) {
 	this.level = lvl;	
 	if (this.level > cfg.BONUS_LEVEL) {
 		cfg.BONUS += cfg.BONUS_INC;
@@ -192,24 +192,24 @@ StatusModel.prototype.setLevel = function (lvl) {
 	return this;
 }
 
-StatusModel.prototype.getLevel = function () {
+Flash.Notes.StatusModel.prototype.getLevel = function () {
 	return this.level;
 }
 
-StatusModel.prototype.advanceLevel = function (){	
+Flash.Notes.StatusModel.prototype.advanceLevel = function (){	
 	this.setLevel((this.level < cfg.MAX_LEVEL) ? this.level += 1 : cfg.MAX_LEVEL);
 	return this;
 }
 
-/* This method operates in GAME mode to indicate whether level advances 
+/** This method operates in GAME mode to indicate whether level advances 
 	@return true if level advances, false otherwise */
-StatusModel.prototype.isLevelAdvance = function (){	
+Flash.Notes.StatusModel.prototype.isLevelAdvance = function (){	
 	var advance = ((this.getPercent() >= cfg.MIN_PERCENT) && (this.getTimeout()) && 
 				(this.getAttempts() >= cfg.MIN_ATTEMPTS)) ? true : false;
 	return advance;
 }
 
-StatusModel.prototype.setGameClefTypes = function () {
+Flash.Notes.StatusModel.prototype.setGameClefTypes = function () {
 	var sel, sw,
 		level = this.getLevel();
 	if (level <= cfg.TIER_1) {
@@ -232,14 +232,14 @@ StatusModel.prototype.setGameClefTypes = function () {
 	this.set_clef(sel);
 }
 
-StatusModel.prototype.set_clef = function (selections) {
+Flash.Notes.StatusModel.prototype.set_clef = function (selections) {
 	var i;
 	for (i = 0; i < 4; i++) {
 		this.active_clefs[i] = selections[i];
 	}
 }
 
-StatusModel.prototype.getClefType = function () {
+Flash.Notes.StatusModel.prototype.getClefType = function () {
 	var i, j,
 		clef_index_array = [],
 		count = 0;
@@ -260,7 +260,7 @@ StatusModel.prototype.getClefType = function () {
 }
 
 // Toggle the clef buttons; if only one button is "on", don't toggle.
-StatusModel.prototype.toggleClefButton = function (type) {
+Flash.Notes.StatusModel.prototype.toggleClefButton = function (type) {
 	var i, count = 0;
 	if (this.active_clefs[type]) {
 		for (i = 0; i < 4; i++) {
@@ -274,7 +274,7 @@ StatusModel.prototype.toggleClefButton = function (type) {
 	return (this.active_clefs[type]) ? cfg.TOGGLE_ON : cfg.TOGGLE_OFF;
 }
 
-StatusModel.prototype.decLives = function (){
+Flash.Notes.StatusModel.prototype.decLives = function (){
 	this.lives -= 1;
 	if (this.lives < 0){
 		this.lives = 0;
@@ -282,17 +282,17 @@ StatusModel.prototype.decLives = function (){
 	return this;
 }
 
-StatusModel.prototype.setLives = function (num){
+Flash.Notes.StatusModel.prototype.setLives = function (num){
 	this.lives = num;
 	return this;
 }
 
-StatusModel.prototype.getLives = function (){
+Flash.Notes.StatusModel.prototype.getLives = function (){
 	return this.lives;
 }
 
-/*Checks two values for a match.  Returns true if match, false otherwise. */
-StatusModel.prototype.match = function (){
+/**Checks two values for a match.  Returns true if match, false otherwise. */
+Flash.Notes.StatusModel.prototype.match = function (){
 	this.value = this.value % this.numOfCodes;	
 	return (this.value === this.keyCode) ? true : false;
 }

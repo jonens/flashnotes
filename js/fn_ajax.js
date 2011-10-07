@@ -1,7 +1,7 @@
 /* AJAX functions */
 
 /* constructor */
-AjaxUtilities = function () {	
+Flash.Notes.AjaxUtilities = function () {	
 	var xhr, xml,
 		req_status = false,
 		that = this,

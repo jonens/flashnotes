@@ -1,7 +1,7 @@
 /* A Clef object */
 
 /* constructor */
-Clef = function(x, y, space, type, src)
+Flash.Notes.Clef = function(x, y, space, type, src)
 {
 	var TREBLE = 0;
 	var BASS = 1;

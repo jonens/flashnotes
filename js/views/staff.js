@@ -1,7 +1,7 @@
-/* A Staff object */
+/** A Staff object */
 
-/* constructor */
-Staff = function (x, y, w, props){
+/** constructor */
+Flash.Notes.Staff = function (x, y, w, props){
 	this.x = x;
 	this.y = y;
 	this.w = w;		
@@ -22,7 +22,7 @@ Staff = function (x, y, w, props){
 	Merge(this.props, props);	
 }
 
-Staff.prototype.path = function (){
+Flash.Notes.Staff.prototype.path = function (){
 	var sp = " ";
 	var M = "M ";
 	var L = "L ";	
@@ -38,58 +38,58 @@ Staff.prototype.path = function (){
 	return path;
 }
 
-Staff.prototype.getProps = function (){		
+Flash.Notes.Staff.prototype.getProps = function (){		
 	return this.props;
 }
 
-Staff.prototype.setNumOfLines = function (num){
+Flash.Notes.Staff.prototype.setNumOfLines = function (num){
 	this.props.numOfLines = num;
 	return this;
 }
 
-Staff.prototype.setSpace = function (sp){
+Flash.Notes.Staff.prototype.setSpace = function (sp){
 	this.props.space = sp;
 	return this;
 }
 
-Staff.prototype.setLedgerLines = function (num){
+Flash.Notes.Staff.prototype.setLedgerLines = function (num){
 	this.props.ledgerLines = num;
 	return this;
 }
 
-Staff.prototype.setNumOfPositions = function (){
+Flash.Notes.Staff.prototype.setNumOfPositions = function (){
 	this.props.numOfPositions = 2 * (this.getNumOfLines + 2*this.getLedgerLines()) + 1;	
 	return this;
 }
 
-Staff.prototype.getNumOfLines = function (){
+Flash.Notes.Staff.prototype.getNumOfLines = function (){
 	return this.props.numOfLines;
 }
 
-Staff.prototype.getSpace = function (){
+Flash.Notes.Staff.prototype.getSpace = function (){
 	return this.props.space;
 }
 
-Staff.prototype.getLedgerLines = function (){
+Flash.Notes.Staff.prototype.getLedgerLines = function (){
 	return this.props.ledgerLines;
 }
 
-Staff.prototype.getNumOfPositions = function (){
+Flash.Notes.Staff.prototype.getNumOfPositions = function (){
 	return this.props.numOfPositions;
 }
 
-Staff.prototype.bottomPos = function (){
+Flash.Notes.Staff.prototype.bottomPos = function (){
 	var position = this.y + (((this.getNumOfLines() - 1) + 
 						this.getLedgerLines()) * this.getSpace());
 	return position;
 }
 
-Staff.prototype.topPos = function (){
+Flash.Notes.Staff.prototype.topPos = function (){
 	return this.y - 
 		((this.getLedgerLines() + 1) * this.getSpace());
 }
 
-Staff.prototype.ledgerLines = function (pos){
+Flash.Notes.Staff.prototype.ledgerLines = function (pos){
 	var maxPosBelow = 2 * (this.getLedgerLines()) - 1;
 	var minPosAbove = 2 * (this.getLedgerLines() + this.getNumOfLines()) + 1;
 	var numLedLines = 0;
@@ -102,8 +102,8 @@ Staff.prototype.ledgerLines = function (pos){
 	return numLedLines;
 }
 
-/* Return the current y-coordinate for the given note position */
-Staff.prototype.getPosY = function (pos){
+/** Return the current y-coordinate for the given note position */
+Flash.Notes.Staff.prototype.getPosY = function (pos){
 	if (pos > (this.getNumOfPositions() - 1)){
 		return this.getTopPos();
 	}

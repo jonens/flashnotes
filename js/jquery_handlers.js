@@ -7,12 +7,12 @@ $(document).ready(function () {
 		$('#nocanvas_frame').show();
 	}
 	else {
-		cfg = new Config();
-		statusModel = new StatusModel();
-		statusView = new StatusView();
-		notationModel = new NotationModel();
-		notationController = new NotationController(0);			
-		gameController = new GameController();		
+		cfg = new Flash.Notes.Config();
+		statusModel = new Flash.Notes.StatusModel();
+		statusView = new Flash.Notes.StatusView();
+		notationModel = new Flash.Notes.NotationModel();
+		notationController = new Flash.Notes.NotationController(0);			
+		gameController = new Flash.Notes.GameController();		
 		$('#stop').hide();
 		$('#menu_frame').show();		
 		$('#practice_button').click(function () {

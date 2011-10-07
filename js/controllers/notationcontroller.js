@@ -1,11 +1,11 @@
-/* Methods to control the display and properties of a notation view, and update 
+/** Methods to control the display and properties of a notation view, and update 
 	the NotationModel   */
 
-/* constructor - @param number num The number of ledgerlines to start with */
-NotationController = function (num)
+/** constructor - @param number num The number of ledgerlines to start with */
+Flash.Notes.NotationController = function (num)
 {
 	//this.nm = new NotationModel();
-	this.nv = new NotationView("staff_box", 350, 240);
+	this.nv = new Flash.Notes.NotationView("staff_box", 350, 240);
 	this.clefObj;
 	this.clefImg;
 	this.staffBox;
@@ -18,8 +18,8 @@ NotationController = function (num)
 	this.setLedgerLines(num);
 }
 
-/* Draw a new staff on the Raphael canvas */
-NotationController.prototype.drawStaff = function ()
+/** Draw a new staff on the Raphael canvas */
+Flash.Notes.NotationController.prototype.drawStaff = function ()
 {
 	this.staffPaper = this.nv.paper;			
 	this.nv.box.fillRect(this.nv.RECT_X, this.nv.RECT_Y, this.nv.RECT_W, this.nv.RECT_H);
@@ -34,7 +34,7 @@ NotationController.prototype.drawStaff = function ()
 						this.nv.RECT_Y, 40, this.nv.RECT_H);
 }
 
-NotationController.prototype.drawClef = function (type)
+Flash.Notes.NotationController.prototype.drawClef = function (type)
 {	
 	this.clefObj = this.nv.clef(type, notationModel.getImgUrl(type));
 	notationModel.setClefType(type);
@@ -45,7 +45,7 @@ NotationController.prototype.drawClef = function (type)
 	this.clefImg.show();
 }
 
-NotationController.prototype.drawNote = function ()
+Flash.Notes.NotationController.prototype.drawNote = function ()
 {
 	var pos = randomPos(this.nv.PROPS.numPos),	
 		note = this.nv.note(pos, this.nv.staff),
@@ -70,7 +70,7 @@ NotationController.prototype.drawNote = function ()
 	}
 }
 
-NotationController.prototype.hideNote = function ()
+Flash.Notes.NotationController.prototype.hideNote = function ()
 {		
 	if (this.llShow) 
 	{
@@ -80,13 +80,13 @@ NotationController.prototype.hideNote = function ()
 	if (this.noteShow) this.noteImg.hide();
 }
 
-NotationController.prototype.getNoteValue = function ()
+Flash.Notes.NotationController.prototype.getNoteValue = function ()
 {
 	return notationModel.getNoteValue();
 }
 
-/* @param number num = the number of ledger lines to draw above or below the staff */
-NotationController.prototype.setLedgerLines = function (num)
+/** @param number num = the number of ledger lines to draw above or below the staff */
+Flash.Notes.NotationController.prototype.setLedgerLines = function (num)
 {
 	notationModel.setLedgerLines(num);
 	this.nv.PROPS.ledgerLines = num;
@@ -95,12 +95,12 @@ NotationController.prototype.setLedgerLines = function (num)
 	this.nv.staff.setNumOfPositions();
 }
 
-NotationController.prototype.getLedgerLines = function ()
+Flash.Notes.NotationController.prototype.getLedgerLines = function ()
 {
 	return notationModel.getLedgerLines();
 }
 
-NotationController.prototype.getRandomClefType = function (range, offset)
+Flash.Notes.NotationController.prototype.getRandomClefType = function (range, offset)
 {
 	return notationModel.randomClefType(range, offset);
 }

@@ -1,4 +1,4 @@
-Config = function () {
+Flash.Notes.Config = function () {
 	this.TREBLE = 0;
 	this.BASS = 1;
 	this.ALTO = 2;

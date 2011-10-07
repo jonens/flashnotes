@@ -1,8 +1,8 @@
-/* Methods to control the gameplay and properties of a FlashNotes game, and 
+/** Methods to control the gameplay and properties of a FlashNotes game, and 
    update the StatusModel */
    
-/* constructor   */
-GameController = function (){
+/** constructor   */
+Flash.Notes.GameController = function (){
 	var xmlResponse, txt, s, t, i;
 	//this.xhr;
 	this.timerId;
@@ -12,8 +12,8 @@ GameController = function (){
 	this.init();	
 }
 
-/* Initialize game variables to initial state */
-GameController.prototype.init = function (){	
+/** Initialize game variables to initial state */
+Flash.Notes.GameController.prototype.init = function (){	
 	statusModel.start(false);
 	statusModel.setTimeout(false);	
 	statusModel.setTimeInterval(cfg.TIMEOUT);
@@ -33,11 +33,11 @@ GameController.prototype.init = function (){
 	return this;
 }
 
-GameController.prototype.setMode = function (mode){
+Flash.Notes.GameController.prototype.setMode = function (mode){
 	statusModel.setMode(mode);
 }
 
-GameController.prototype.initClefs = function (type) {
+Flash.Notes.GameController.prototype.initClefs = function (type) {
 	var i;
 	for (i = 0; i < 4; i++) {
 		statusModel.active_clefs[i] = false;
@@ -49,7 +49,7 @@ GameController.prototype.initClefs = function (type) {
 	statusModel.clefButtons[type].addClass('on');	
 }
 
-GameController.prototype.startGame = function (timer_id){
+Flash.Notes.GameController.prototype.startGame = function (timer_id){
 	var start = statusModel.getStart();
 	var key_id = "a";
 	var mode = statusModel.getMode();
@@ -72,7 +72,8 @@ GameController.prototype.startGame = function (timer_id){
 	}
 }
 
-GameController.prototype.startTimer = function (timer_id, timeOut, mode){	
+Flash.Notes.GameController.prototype.startTimer = function (timer_id, timeOut, mode){
+	var that = this;
 	if (timeOut < 0){	
 		clearTimeout(this.t);
 		statusModel.setTimeout(true);		
@@ -80,7 +81,7 @@ GameController.prototype.startTimer = function (timer_id, timeOut, mode){
 	}
 	else{
 		this.t = setTimeout(function () {
-			this.GameController.prototype.updateTimer(timer_id, timeOut, mode) 
+			that.updateTimer(timer_id, timeOut, mode) 
 			}, 
 			1000);
 	}	
@@ -88,7 +89,7 @@ GameController.prototype.startTimer = function (timer_id, timeOut, mode){
 	return this;	
 }
 
-GameController.prototype.updateTimer = function (timer_id, time, mode) {	
+Flash.Notes.GameController.prototype.updateTimer = function (timer_id, time, mode) {	
 	if (statusModel.getStart() && mode === cfg.GAME_MODE) {
 		time -= 1;
 		statusModel.setTime(time);
@@ -102,7 +103,7 @@ GameController.prototype.updateTimer = function (timer_id, time, mode) {
 	}
 }
 
-GameController.prototype.continueGame = function (code, key_id) {
+Flash.Notes.GameController.prototype.continueGame = function (code, key_id) {
 	var lives, matched,
 		start = statusModel.getStart(),
 		level = statusModel.getLevel(),
@@ -143,7 +144,7 @@ GameController.prototype.continueGame = function (code, key_id) {
 	}	
 }
 
-GameController.prototype.stopGame = function (){
+Flash.Notes.GameController.prototype.stopGame = function (){
 	var next_level, level, game_over;
 	statusModel.start(false);	
 	notationController.hideNote();	
@@ -166,8 +167,8 @@ GameController.prototype.stopGame = function (){
 	return this;	
 }
 
-/* Call this function only after a timeout (not after user presses stop button) */
-GameController.prototype.resetGame = function (){
+/** Call this function only after a timeout (not after user presses stop button) */
+Flash.Notes.GameController.prototype.resetGame = function (){
 	statusModel.setTimeout(false);
 	statusModel.setTimeInterval(cfg.TIMEOUT);
 	statusModel.setPoints(0);
@@ -175,16 +176,16 @@ GameController.prototype.resetGame = function (){
 	this.displayScore();
 }
 
-GameController.prototype.getStart = function(){
+Flash.Notes.GameController.prototype.getStart = function(){
 	return statusModel.getStart();
 }
 
-GameController.prototype.isNoteMatched = function(){
+Flash.Notes.GameController.prototype.isNoteMatched = function(){
 	var match = statusModel.match();
 	return match;
 }
 
-GameController.prototype.toggleClef = function (type) {
+Flash.Notes.GameController.prototype.toggleClef = function (type) {
 	var	toggleState = statusModel.toggleClefButton(type);
 	switch (toggleState) {
 		case cfg.TOGGLE_ON:
@@ -202,7 +203,7 @@ GameController.prototype.toggleClef = function (type) {
 	}
 }
 
-GameController.prototype.setPracticeLedger = function () {
+Flash.Notes.GameController.prototype.setPracticeLedger = function () {
 	var pct = statusModel.getPercent(),
 		att = statusModel.getAttempts(),
 		numlines = notationController.getLedgerLines();
@@ -215,9 +216,9 @@ GameController.prototype.setPracticeLedger = function () {
 	}
 }
 		
-/* Use this method to update the game to the next level when in GAME mode,
+/** Use this method to update the game to the next level when in GAME mode,
 	ONLY after stopGame() && */
-GameController.prototype.updateLevel = function (){
+Flash.Notes.GameController.prototype.updateLevel = function (){
 	var level = statusModel.getLevel(),
 		ledger_num = ((level % 2) === 0) ? (level/2 - 1) : Math.floor(level/2),
 		clef_type;
@@ -250,7 +251,7 @@ GameController.prototype.updateLevel = function (){
 	this.displaySessionAlert(true, false, false);
 }
 
-GameController.prototype.displayPractice = function (){
+Flash.Notes.GameController.prototype.displayPractice = function (){
 	this.init();
 	this.setMode(cfg.PRACTICE_MODE);
 	$('#menu_frame').hide();
@@ -263,15 +264,15 @@ GameController.prototype.displayPractice = function (){
 	$('#start_button').show();
 }
 
-GameController.prototype.displayGame = function (){
+Flash.Notes.GameController.prototype.displayGame = function (){
 	this.init();
 	this.setMode(cfg.GAME_MODE);
 	statusView.initLivesDisplay("game_lives", cfg.MAX_LIVES);
 	this.displaySessionAlert(true, false, false);		
 }
 
-/* Display points, percent, and total score on Status Bar on Game Screen */
-GameController.prototype.displayScore = function (){	
+/** Display points, percent, and total score on Status Bar on Game Screen */
+Flash.Notes.GameController.prototype.displayScore = function (){	
 	statusView.displayPoints("#status_points", statusModel.getPoints(), 
 		statusModel.getAttempts());
 	statusView.displayPercent("#status_percent", statusModel.getPoints(), 
@@ -283,8 +284,8 @@ GameController.prototype.displayScore = function (){
 	statusView.displayHiScore("#hi_score", statusModel.getHiScore());
 }
 
-/* Display points, percent, and total score on Summary Screen*/
-GameController.prototype.displaySummary = function (){	
+/** Display points, percent, and total score on Summary Screen*/
+Flash.Notes.GameController.prototype.displaySummary = function (){	
 	var time;
 	$('#game_frame').hide();
 	statusView.displayPoints("#point_summary", statusModel.getPoints(), 
@@ -314,17 +315,17 @@ GameController.prototype.displaySummary = function (){
 	$('#summary_frame').show();
 }
 
-GameController.prototype.removeLivesDisplay = function (){
+Flash.Notes.GameController.prototype.removeLivesDisplay = function (){
 	if (statusModel.getMode() === cfg.GAME_MODE) {
 		statusView.removeLivesDisplay();
 	}
 }
 
-/* Display Game_Mode session alerts 
+/** Display Game_Mode session alerts 
 	@param boolean start Display "start_session" button if true, display 
 		"end_session" button if false.  
 	@param boolean over Display "game_end" if true		*/
-GameController.prototype.displaySessionAlert = function (start, over, nextLevel){
+Flash.Notes.GameController.prototype.displaySessionAlert = function (start, over, nextLevel){
 	var lives, lives_str;
 	$('#menu_frame').hide();
 	$('#instructions_frame').hide();
@@ -363,7 +364,7 @@ GameController.prototype.displaySessionAlert = function (start, over, nextLevel)
 	}
 }
 
-GameController.prototype.processFinalScore = function (){
+Flash.Notes.GameController.prototype.processFinalScore = function (){
 	var xhr, hiScore, 
 		scoreStr,
 		currentScore = statusModel.getScore(),
@@ -394,8 +395,9 @@ GameController.prototype.processFinalScore = function (){
 	ajaxUtilities.send("POST", scoreStr);	
 }
 
-GameController.prototype.displayFinalScore = function (success){
-	var i, score, date, time,		
+Flash.Notes.GameController.prototype.displayFinalScore = function (success){
+	var i, score, date, time,
+		rank = "",
 		scores = "",
 		dates = "",
 		footer_string = "your score: " + statusModel.getScore(),
@@ -405,22 +407,27 @@ GameController.prototype.displayFinalScore = function (success){
 			score = parseInt(statusModel.top_scores[i]);
 			date = statusModel.top_date_strings[i];
 			time = parseInt(statusModel.top_times[i]);
-			if (score === statusModel.getScore() && time === statusModel.getDateTime()){				
-				scores += "<span class=\"your_scores\">****" + score + "</span><br />";
+			if (score === statusModel.getScore() && time === statusModel.getDateTime()){	rank += "<span class=\"your_scores\">" + (i + 1) + ".</span><br />";
+				scores += "<span class=\"your_scores\">" + score + "*" +  "</span><br />";
 				dates += "<span class=\"your_scores\">" + date + "</span><br />";
-				footer_string = "**** your score";
+				footer_string = "* your score";
 			}
 			else {
+				rank += (i + 1) + ".<br />";
 				scores += score + "<br />";
 				dates += date + "<br />";
 			}
 		}
 	}
 	else {
-		scores += "unavailable";
-		dates += "unavailable";
+		for (i = 0; i < 10; i++){
+			rank += (i + 1) + ".<br />";
+			scores += "unavailable<br />";
+			dates += "unavailable<br />";
+		}
 	}	
-	$('#score_display_frame').show();	
+	$('#score_display_frame').show();
+	$('#top_rank').html(rank);
 	$('#top_scores').html(scores);
 	$('#top_dates').html(dates);
 	$('#top_score_footer').html(footer_string);
