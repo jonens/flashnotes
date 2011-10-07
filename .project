@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
+<<<<<<< HEAD
 	<name>FlashNotes</name>
+=======
+	<name>git</name>
+>>>>>>> 7163fa357117217df32a2fe8303cea9f5eadc96d
 	<comment></comment>
 	<projects>
 	</projects>
 	<buildSpec>
+<<<<<<< HEAD
 		<buildCommand>
 			<name>org.python.pydev.PyDevBuilder</name>
 			<arguments>
@@ -19,5 +24,9 @@
 	<natures>
 		<nature>com.aptana.projects.webnature</nature>
 		<nature>org.python.pydev.pythonNature</nature>
+=======
+	</buildSpec>
+	<natures>
+>>>>>>> 7163fa357117217df32a2fe8303cea9f5eadc96d
 	</natures>
 </projectDescription>
