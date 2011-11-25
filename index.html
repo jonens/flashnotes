@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title "FlashNotes Music Game" />
+		<title>FlashNotes Music Game</title>
 		<link rel="stylesheet" type="text/css" href="css/flashnotes.css" />
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 		<script type="text/javascript" src="js/modernizr.custom.18580.js"></script>
@@ -9,9 +9,9 @@
 			if (!Modernizr.canvas) {				
 				$('#raphael').remove();
 			}			
-		</script>		
+		</script>
 		<script type="text/javascript" src="js/raphael_min.js" id="raphael"></script>
-		<script type="text/javascript" src="js/flashnotes_min.js"></script>		
+		<script type="text/javascript" src="js/flashnotes_min.js"></script>
 		<meta name="viewport" content="user-scalable=no, width=device-width" />
 	</head>
 	<body>
@@ -24,13 +24,13 @@
 			or <a href="http://www.opera.com/" target="_blank">Opera</a>.
 		</noscript>
 		<script>
-			var statusModel;
-			var statusView;
+			var statusModel;// = new StatusModel();
+			var statusView;// = new StatusView();
 			var notationModel;
-			var notationController;	
-			var gameController;
+			var notationController;// = new ScoreController(2);			
+			var gameController;// = new GameController();
 			var cfg;
-			var ajaxUtilities = new AjaxUtilities();
+			var ajaxUtilities = new Flash.Notes.AjaxUtilities();
 		</script>		
 		<div id="nocanvas_frame" title="No Canvas" class="frame">
 				<h2>No &lt;canvas&gt; Support</h2>
@@ -40,7 +40,7 @@
 			<a href="http://www.apple.com/safari/" target="_blank">Safari</a>, 
 			<a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home" target="_blank">IE9</a>, 
 			or <a href="http://www.opera.com/" target="_blank">Opera</a>.</p>
-			<p class="go_home"><a href="http://www.pedaplus.com/index.php/2011-05-09-16-34-24">back to games page</a></p>
+			<p class="go_home"><a href="http://www.pedaplus.com/cms/node/2">back to games page</a></p>
 		</div>
 		<div id="instructions_frame" title="FlashNotes Instructions" class="frame">
 			<h3>Instructions</h3>
@@ -75,7 +75,7 @@
 						<td class="status" id="status_points">00/00</td>
 						<td class="status" id="status_percent">000%</td>
 						<td class="status" id="status_level_label">Level: </td>
-						<td class="status" id="status_level"> 1</td>						
+						<td class="status" id="status_level"> 1</td>
 					</tr>
 				</table>
 			</div>	
@@ -105,7 +105,9 @@
 				</div>
 				<div class="spacer"></div>
 				<div id="game_lives_label" class="status">Lives</div>
-				<div id="game_lives" class="status"></div>				
+				<div id="game_lives" class="status"></div>
+				
+				
 			</div>
 			<div id="menu_buttons" class="menu_box">			
 				<div id="m_row1" class="menu_row"> 
@@ -174,7 +176,7 @@
 			<div id="session_end" class="session_table">				
 				<h3 id="session_end_header">Time Out!</h3>
 				<p id="lives" class="session"></p>
-				<p id="bonus" class="session"></p>								
+				<p id="bonus" class="session"></p>
 			</div>
 			<button type="button" class="session" id="session_summary_button">Summary</button>
 			<div id="game_end" class="session_table">
@@ -192,11 +194,12 @@
 				<button type="button" class="dialog" id="instructions_button">
 						Instructions</button>
 			</div>
-			<p class="go_home"><a href="http://www.pedaplus.com/index.php/2011-05-09-16-34-24">back to games page</a></p>
+			<p class="go_home"><a href="http://www.pedaplus.com/cms/?q=node/2">back to games page</a></p>
 		</div>
 		<div id="score_display_frame" class="frame">
 			<h2>Top 10 Scores</h2>
 			<div id="top_score_box" class="score_box">
+				<div id="top_rank" class="score"></div>
 				<div id="top_scores" class="score">please wait</div>
 				<div id="top_dates" class="score">. . .</div>
 			</div>
