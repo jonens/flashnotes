@@ -1,4 +1,10 @@
-/* This class controls the browser output for the Notation area */
+/**
+ * Flash Notes - a web-based musical flash card game
+ * 
+ * Copyright Jon Ensminger 2011
+ * 
+ * Class for displaying musical notation.
+ */ 
 
 /* constructor */
 NotationView = function (box_id, w, h){

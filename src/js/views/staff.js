@@ -1,4 +1,10 @@
-/* A Staff object */
+/**
+ * Flash Notes - a web-based musical flash card game
+ * 
+ * Copyright Jon Ensminger 2011
+ * 
+ * Staff drawing class.
+ */ 
 
 /* constructor */
 Staff = function (x, y, w, props){

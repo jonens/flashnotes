@@ -1,4 +1,10 @@
-/* A Note object */
+/**
+ * Flash Notes - a web-based musical flash card game
+ * 
+ * Copyright Jon Ensminger 2011
+ * 
+ * Note drawing class.
+ */ 
 
 /* constructor */
 /*

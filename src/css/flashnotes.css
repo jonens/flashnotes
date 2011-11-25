@@ -238,7 +238,7 @@ div.score
 {
 	color: #fea;
 	position: absolute;
-	width: 150px;	
+	width: 130px;	
 	height: 275px;
 	font-family: Trebuchet, Tahoma, Verdana, Arial;
 	font-size: 1.3em;
@@ -249,9 +249,9 @@ div.score_box
 {	
 	position: absolute;
 	top: 75px;
-	width: 360px;
-	height: 295px;
-	left: 70px;
+	width: 300px;
+	height: 290px;
+	left: 100px;
 	border: 2px solid #ff7000;
 	border-radius: 1px;
 	background-color: #333;
@@ -654,6 +654,7 @@ ul.instruction_list
 {
 	/*color: #FFF68F;*/
 	left: 150px;
+	text_align: right;
 }
 #status_level_label
 {
@@ -674,25 +675,15 @@ ul.instruction_list
 {
 	width: 20%;
 }
-#top_dates
-{
-	top: 10px;
-	left: 200px;
-	text-align: left;
-}
-#top_rank
-{
-	top: 10px;
-	left: 5px;
-	width: 30px;
-	text-align: right;
-	border: 0px solid #f02;
-}
 #top_scores
 {
-	top: 10px;
-	left: 50px;
-	width: 125px;
+	top: 15px;
+	left: 10px;
+	text-align: right;
+}
+#top_dates
+{
+	top: 15px;
+	left: 160px;
 	text-align: left;
-	border: 0px solid #ff4;
 }

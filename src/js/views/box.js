@@ -1,6 +1,10 @@
-/*
-	A box for drawing  - built on the Raphael.js library.
-*/
+/**
+ * Flash Notes - a web-based musical flash card game
+ * 
+ * Copyright Jon Ensminger 2011
+ * 
+ * Box drawing class.
+ */ 
 
 /* constructor */
 Box = function (box_id, w, h){	

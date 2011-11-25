@@ -1,3 +1,10 @@
+/**
+ * Flash Notes - a web-based musical flash card game
+ * 
+ * Copyright Jon Ensminger 2011
+ * 
+ * UI event handlers
+ */ 
 $(document).ready(function () {
 	if (!Modernizr.canvas){
 		$('#menu_frame').hide();

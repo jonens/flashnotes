@@ -1,4 +1,9 @@
-/* Provides basic control functions for games */
+/**
+ * Flash Notes - a web-based musical flash card game
+ * 
+ * Copyright Jon Ensminger 2011
+ * Data model class for game play logic and state.
+ */ 
 
 /* constructor */
 StatusModel = function(){

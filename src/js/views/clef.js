@@ -1,4 +1,10 @@
-/* A Clef object */
+/**
+ * Flash Notes - a web-based musical flash card game
+ * 
+ * Copyright Jon Ensminger 2011
+ * 
+ * Clef drawing class.
+ */ 
 
 /* constructor */
 Clef = function(x, y, space, type, src)

@@ -1,5 +1,10 @@
-/* Methods to control the display and properties of a notation view, and update 
-	the NotationModel   */
+/**
+ * Flash Notes - a web-based musical flash card game
+ * 
+ * Copyright Jon Ensminger 2011
+ * 
+ * Controller class for musical notation display and changes.
+ */ 
 
 /* constructor - @param number num The number of ledgerlines to start with */
 NotationController = function (num)

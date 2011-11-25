@@ -1,4 +1,10 @@
-/* This class controls the browser output for the StatusBar */
+/**
+ * Flash Notes - a web-based musical flash card game
+ * 
+ * Copyright Jon Ensminger 2011
+ * 
+ * Game status display class.
+ */ 
 
 /* constructor */
 StatusView = function (){		

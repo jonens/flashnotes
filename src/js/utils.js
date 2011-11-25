@@ -1,4 +1,10 @@
-/* Utilities for the FlashNotes JS routines */
+/**
+ * Flash Notes - a web-based musical flash card game
+ * 
+ * Copyright Jon Ensminger 2011
+ * 
+ * Utility functions.
+ */ 
 
 /* Merge an array */
 function Merge (dest, src){

@@ -1,4 +1,10 @@
-/* AJAX functions */
+/**
+ * Flash Notes - a web-based musical flash card game
+ * 
+ * Copyright Jon Ensminger 2011
+ * 
+ * Class for Ajax basic utilities
+ */ 
 
 /* constructor */
 AjaxUtilities = function (){	

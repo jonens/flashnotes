@@ -1,5 +1,10 @@
-/* Methods to control the gameplay and properties of a FlashNotes game, and 
-   update the StatusModel */
+/**
+ * Flash Notes - a web-based musical flash card game
+ * 
+ * Copyright Jon Ensminger 2011
+ * 
+ * Controller class for game logic and interaction.
+ */ 
    
 /* constructor   */
 GameController = function (){

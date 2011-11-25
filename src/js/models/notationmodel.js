@@ -1,5 +1,10 @@
-/* This class sets and gets current value(s) associated with the 
-	notation area of the screen  */
+/**
+ * Flash Notes - a web-based musical flash card game
+ * 
+ * Copyright Jon Ensminger 2011
+ * 
+ * Data model class for musical notation.
+ */ 
 
 /* constructor */
 NotationModel = function()
