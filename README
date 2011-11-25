@@ -1,0 +1,8 @@
+FlashNotes - a web-based nusical note-naming game using JavaScript, HTML, and CSS.
+Copyright 2011 by Jon Ensminger.
+
+I use Google Closure to compile the .js files.
+
+Dependencies: Raphael, JQuery, Modernizr Javascript libraries.
+
+Intended for use on modern browsers: Chrome, FireFox, IE9, Opera, Safari.
