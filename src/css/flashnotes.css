@@ -1,0 +1,698 @@
+/* Elements */
+a
+{
+	color: #CCFFFF;
+}
+a:hover
+{
+	color: #99FFCC;
+}
+a:visited
+{
+	color: #FF99FF;
+}
+a:active
+{
+	color: orange;
+	font-weight: bold;
+}
+body
+{
+	background-color:#447;
+	position: relative;
+	width: 550px;
+	height: 550px;	
+	margin-left: auto;
+	margin-right: auto;
+	padding: 0px;
+}
+button
+{		
+	border-radius: 10px;
+	border-width: 2px;
+	border-style: outset;
+	background-repeat: no-repeat;
+	opacity: 0.90;
+}
+button.clefBtn
+{
+	position: relative;
+	width: 44px;
+	height: 44px;
+	margin: 2px 2px;
+	border-width: 2px;
+}
+.on
+{
+	border-color: green;
+	background-color: white;
+}
+.off
+{
+	border-color: #444;
+	background-color: #333;
+}
+
+button.close
+{
+	position: relative;
+	color: #111144;
+	font-size: 1.0em;
+	margin-left: auto;
+	margin-right: auto;
+	width:200px;
+	height:40px;
+	margin-bottom: 4px;
+	border-color: #ff7000 #f96 #f96 #ff7000;
+	background-color: #17d;
+}
+button.dialog
+{
+	position: relative;
+	color: #fea;
+	font-size: 1.1em;
+	margin-left: auto;
+	margin-right: auto;
+	width:160px;
+	height:50px;
+	margin-bottom: 12px;
+	border-color: #ff7000 #f96 #f96 #ff7000;
+	background-color: #17d;
+}
+button.inputBtn
+{
+	position: relative;	
+	width:64px;
+	height:64px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: auto;
+	margin-bottom: auto;
+	border-color: #fefeaa #ddd #ddd #fefeaa;
+	background-color: #06f;
+	/*background-image:url('../images/gryBtn.png');*/
+}
+.down
+{
+	border-color: #ffb #bbb #bbb #ffb;
+	background-color: #3de;
+}
+button.ledger
+{
+	position: relative;
+	top: 6px;
+	width: 28px;
+	height: 28px;	
+	border: 0px solid #447;
+	border-radius: 0px;
+	background-color: #447;	
+}
+button.menuBtn
+{
+	position: relative;	
+	width:64px;
+	height:64px;	
+	margin: 2px 20px;	
+	background-color: #fff;
+}
+button.session
+{
+	position: relative;
+	color: #111144;
+	font-size: 1.0em;
+	margin-left: auto;
+	margin-right: auto;
+	width:150px;
+	height:50px;
+	margin-bottom: 12px;
+	border-color: #ff7000 #f96 #f96 #ff7000;
+	background-color: #17d;
+}
+button.summary
+{
+	position: relative;
+	color: #111144;
+	font-size: 1.0em;
+	margin: 2% 0%;
+	width: 180px;
+	height: 50px;
+	margin-bottom: 12px;
+	border-color: #ff7000 #f96 #f96 #ff7000;
+	background-color: #17d;
+}
+div.button_row
+{	
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+	padding: 2px 2px;
+}
+div.dialog_content
+{
+	display: none;
+}
+div.frame
+{
+	color: #fea;
+	position: absolute;
+	width: 500px;
+	height: 500px;
+	top: 0px;
+	margin-left: auto;
+	margin-right: auto;
+	font-family: Trebuchet, Tahoma, Verdana, Arial;	
+	background-color:#447;
+	border: 2px solid #ff7000;
+	border-radius: 25px;
+	display: none;
+}
+div.info
+{
+	position: relative;
+	text-align: center;
+	font-family: Verdana, Tahoma, Arial;
+	font-size: 1.4em;
+	margin-left: auto;
+	margin-right: auto;
+	color: #ff7000;	
+}
+div.input_box
+{		
+	position: relative;
+	left: 80px;
+	top: 116px;
+	float: left;	
+	background-color:#447;	
+	margin-left: auto;
+	margin-right: auto;	
+	width: 300px;
+	padding: 2px 2px;
+}
+div.instructions_btn
+{
+	position: relative;
+	top: 0px;
+	margin-left: auto;	
+	margin-right: auto;	
+	width: 180px;
+	height: 30px;
+	padding: 3px 3px;
+	border: 0px solid #eee;	
+}
+div.menu_box
+{
+	position: absolute;
+	left: 360px;
+	top: 80px;
+	float: left;	
+	margin-left: 5%;
+	margin-right: 5%;
+	width: 106px;
+	height: 250px;
+	border: 0px solid #eee;
+	padding: 0px 0px;
+	background-color: #447;
+}
+div.menu_dlg_btns
+{
+	position: relative;
+	top: 100px;
+	margin-left: auto;	
+	margin-right: auto;	
+	width: 160px;
+	height: 180px;
+	padding: 3px 3px;
+	border: 0px solid #f00;	
+}
+div.menu_row
+{
+	position: absolute;
+	float: left;
+	border: 0px solid #eee;
+}
+div.regular
+{
+	color: black;
+}
+div.score
+{
+	color: #fea;
+	position: absolute;
+	width: 150px;	
+	height: 275px;
+	font-family: Trebuchet, Tahoma, Verdana, Arial;
+	font-size: 1.3em;
+	border: 0px solid #ff7000;
+	border-radius: 1px;
+}
+div.score_box
+{	
+	position: absolute;
+	top: 75px;
+	width: 360px;
+	height: 295px;
+	left: 70px;
+	border: 2px solid #ff7000;
+	border-radius: 1px;
+	background-color: #333;
+}
+div.score_footer
+{
+	position: absolute;
+	width: 300px;	
+	height: 25px;
+	top: 380px;
+	left: 100px;
+	font-size: 1.1em;
+	text-align: center;
+	color: orange;
+	border: 0px solid white;
+}
+div.session_table
+{
+	color: #ff7000;
+	font-family: Trebuchet, Tahoma, Verdana, Arial;
+	font-size: 1.5em;
+	position: relative;	
+	text-align: center;
+	top: 150px;
+	left: 0px;
+	width: 200px;
+	height: 200px;
+	border: 2px solid #ff7000;
+	background-color: #111144;
+	margin-left: auto;
+	margin-right: auto;
+	z-index: 4;
+	border-radius: 25px;
+}
+div.spacer
+{
+	height: 20px;
+	background-color: #447;
+}
+div.status
+{
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
+	width: 90px;
+	height: 22px;
+	border: 0px solid #eee;
+	padding: 0px 0px;
+	font-size: 0.8em;
+	text-align: center;
+	background-color: #447;
+}
+div.status_box
+{
+	position: relative;
+	left: 90px;
+	top: -140px;
+	float: left;
+	width: 90px;
+	height: 185px;
+	border: 1px solid #F5F5DC;
+	padding: 2px 2px;	
+	background-color: #447;	
+}
+div.sum_buttons
+{
+	position: relative;
+	border: 0px solid white;
+	top: 60px;
+	width: 180px;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 5px 5px;
+}
+div.summary_table
+{
+	color: #ff7000;
+	font-family: Trebuchet, Tahoma, Verdana, Arial;
+	font-size: 1.5em;
+	position: relative;
+	text-align: center;
+	width: 500px;
+	height: 500px;
+	border: 3px solid #ff7000;
+	background-color: #111144;
+	margin-left: auto;
+	margin-right: auto;
+	z-index: 2;
+	border-radius: 25px;
+}
+h1, h2, h3, h4
+{
+	position: relative;
+	top: 15px;
+	text-align: center;
+}
+hr
+{
+	width: 100%;
+	height: 1px;
+	border: 1px solid #eee;
+}
+p
+{
+	position: relative;
+	width: 350px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: left;
+	font-family: Tahoma, Trebuchet;	
+}
+p.go_home
+{
+	text-align: center;
+	font-size: 1.5em;
+	top: 160px;
+}
+p.no_canvas
+{
+	top: 30px;
+}
+p.session
+{
+	width: 120px;
+	color: #fea;
+	text-align: center;
+	font-size: 0.85em;
+}
+span.ledger_num
+{
+	position: relative;
+	top: 5px;
+	color: #fea;
+	font-size: 1.65em;
+	font-weight: bold;
+}
+span.hiscore_text
+{
+	color: #ff710e;
+	font-size: 1.65em;
+	font-weight: bold;
+}
+span.score_text
+{
+	color: #02af11;
+	font-size: 1.35em;
+	font-weight: bold;
+}
+span.your_scores
+{
+	color: orange;
+	font-weight: bold;
+}
+table.status
+{
+	border: 0px solid #F5F5DC;	
+	width: 305px;
+}
+table.tbl_scores
+{
+	position: relative;
+	top: 20px;
+	margin-left: auto;	
+	margin-right: auto;	
+	width: 40px;
+	height: 100px;
+	padding: 3px 3px;
+	border: 0px solid #f00;	
+}
+table.tbl_summary
+{
+	position: relative;
+	top: 30px;
+	margin-left: auto;	
+	margin-right: auto;	
+	width: 240px;
+	height: 100px;
+	padding: 3px 3px;
+	border: 0px solid #ff7000;
+	border-radius: 15px;	
+}
+td.scores
+{	
+	text-align: center;	
+}
+td.status
+{
+	position: absolute;
+	text-align: center;
+	color: #1f1;	
+	border: 0px solid gray;
+}
+td.td_summary
+{
+	position: relative;
+	text-align: center;
+	color: #1f1;
+	font-size: 1.2em;
+	border: 0px solid gray;
+}
+td.summary_label
+{
+	position: relative;
+	width: 70%;
+	text-align: left;
+	color: #fea;
+	font-size: 1.2em;
+	border: 0px solid gray;
+}
+ul.instruction_list
+{
+	position: relative;
+	width: 350px;
+	margin-left: auto;
+	margin-right: auto;
+	border: 0px solid #ff7000;
+	border-radius: 25px;
+	padding: 25px 25px;
+	font-size: 0.9em;
+}
+/* Classes */
+.hover
+{
+	border: 4px solid #eee;
+}
+.out
+{
+	border: 5px solid #fea;
+}
+
+/* IDs */
+#instructions_frame
+{	
+	font-size: 0.9em;
+	text-align: left;
+}
+#clef_buttons
+{
+	position: relative;
+}
+#alto_button
+{
+	background-image:url('../images/altoBtn_sm_trans.png');
+}	
+#bass_button
+{
+	background-image:url('../images/bassBtn_sm_trans.png');
+}
+#tenor_button
+{
+	background-image:url('../images/tenorBtn_sm_trans.png');
+}
+#treble_button
+{
+	background-image:url('../images/trebleBtn_sm_trans.png');
+}
+#btnrow1
+{	
+	width: 275px;
+	border: 0px solid white;
+}
+#btnrow2
+{	
+	width: 210px;
+	border: 0px solid white;
+}
+#a
+{
+	background-image:url('../images/aBtn_trans.png');
+}
+#b
+{
+	background-image:url('../images/bBtn_trans.png');
+}
+#c
+{
+	background-image:url('../images/cBtn_trans.png');
+}
+#d
+{
+	background-image:url('../images/dBtn_trans.png');
+}
+#e
+{
+	background-image:url('../images/eBtn_trans.png');
+}
+#f
+{
+	background-image:url('../images/fBtn_trans.png');
+}
+#g
+{
+	background-image:url('../images/gBtn_trans.png');
+}
+#ledger_left_Btn
+{
+	float: left;
+	background-image: url('../images/arrow_left_orng.png');
+}
+#ledger_right_Btn
+{
+	float: right;
+	background-image: url('../images/arrow_right_orng.png');
+}
+#level
+{
+	width: 10%;
+}
+#level_label
+{
+	width: 20%;
+}
+#main_menu_button
+{
+	top: 345px;
+	left: 175px;
+	display: none;
+}
+#menu_button
+{
+	background-image: url('../images/menuBtn.png');
+}
+#m_row1
+{
+	top: 0px;
+	left: 0px;
+}
+#m_row2
+{
+	top: 125px;
+	left: 0px;
+	width: 106px;
+	height: 64px;
+	color: #ff7000;
+	text-align: center;
+}
+#percent
+{
+	width: 15%;
+}
+#points
+{
+	width: 10%;
+}
+#score_label
+{
+	width: 15%;
+}
+#score
+{
+	width: 10%;
+}
+#staff_box
+{
+	position: relative;
+	float: left;
+	left: 5px;
+	top: 75px;
+	margin-left:5%;
+	margin-right:5%;
+	border: 0px solid white;
+	width: 350px;
+	height: 180px;
+}
+#session_summary_button
+{
+	top: 165px;
+	left: 175px;
+	display: none;
+}
+#start_button
+{
+	border-color: #aaddaa #ddd #ddd #aaddaa;
+	background-image: url('../images/startBtn_trans.png');	
+}
+#status_bar
+{
+	position: relative;
+	float: left;
+	left: 47px;
+	top: 70px;
+	width: 305px;
+	height: 33px;
+	margin-left:5%;
+	margin-right:5%;
+	border: 1px solid #F5F5DC;
+	background-color: #222;	
+}
+#status_timer
+{
+	color: #98F5FF;
+	left: 5px;
+}
+#status_points
+{
+	/*color: #FFF68F;*/
+	left: 90px;
+}
+#status_percent
+{
+	/*color: #FFF68F;*/
+	left: 150px;
+}
+#status_level_label
+{
+	left: 220px;
+}
+#status_level
+{
+	left: 275px;
+	font-weight: bold;
+	color: #34ff34;
+}
+#stop_button
+{
+	border-color: red #ccc #ccc red;
+	background-image: url('../images/stopBtn_trans.png');	
+}
+#timer
+{
+	width: 20%;
+}
+#top_dates
+{
+	top: 10px;
+	left: 200px;
+	text-align: left;
+}
+#top_rank
+{
+	top: 10px;
+	left: 5px;
+	width: 30px;
+	text-align: right;
+	border: 0px solid #f02;
+}
+#top_scores
+{
+	top: 10px;
+	left: 50px;
+	width: 125px;
+	text-align: left;
+	border: 0px solid #ff4;
+}
